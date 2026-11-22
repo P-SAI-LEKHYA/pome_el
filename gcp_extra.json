@@ -1,0 +1,36 @@
+{
+  "compute_ondemand_monthly_usd": {
+    "A_Startup": 85.15012,
+    "B_Midsize": 340.60048,
+    "C_DataHeavy": 681.20096
+  },
+  "compute_1yr_monthly_usd": {
+    "A_Startup": 53.63748,
+    "B_Midsize": 214.54992,
+    "C_DataHeavy": 429.09984
+  },
+  "storage_gb_month_usd": 0.12,
+  "egress_tiers": [
+    [
+      0.0,
+      200.0,
+      0.0
+    ],
+    [
+      200.0,
+      10240.0,
+      0.11
+    ],
+    [
+      10240.0,
+      153600.0,
+      0.075
+    ],
+    [
+      153600.0,
+      null,
+      0.07
+    ]
+  ],
+  "egress_basis": "Network Standard Data Transfer Out to Internet from Mumbai"
+}

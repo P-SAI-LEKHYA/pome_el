@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.env
+.venv/
+venv/
+aws_ec2_mumbai.csv

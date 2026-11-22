@@ -1,0 +1,10 @@
+workload,provider,sku,product,sku_name,price_type,term,unit,price_inr,effective
+A_Startup,Azure,Standard_D2s_v5,Virtual Machines Dsv5 Series,Standard_D2s_v5,Consumption,,1 Hour,9.618104,2021-11-01T00:00:00Z
+A_Startup,Azure,Standard_D2s_v5,Virtual Machines Dsv5 Series,Standard_D2s_v5,Reservation,1 Year,1 Hour,51994.8975,2026-06-01T00:00:00Z
+A_Startup,Azure,Standard_D2s_v5,Virtual Machines Dsv5 Series,Standard_D2s_v5,Reservation,3 Years,1 Hour,99799.73,2026-06-01T00:00:00Z
+B_Midsize,Azure,Standard_D8s_v5,Virtual Machines Dsv5 Series,Standard_D8s_v5,Consumption,,1 Hour,38.472415,2021-11-01T00:00:00Z
+B_Midsize,Azure,Standard_D8s_v5,Virtual Machines Dsv5 Series,Standard_D8s_v5,Reservation,1 Year,1 Hour,207979.59,2026-06-01T00:00:00Z
+B_Midsize,Azure,Standard_D8s_v5,Virtual Machines Dsv5 Series,Standard_D8s_v5,Reservation,3 Years,1 Hour,399389.3775,2026-06-01T00:00:00Z
+C_DataHeavy,Azure,Standard_D16s_v5,Virtual Machines Dsv5 Series,Standard_D16s_v5,Consumption,,1 Hour,76.94483,2021-11-01T00:00:00Z
+C_DataHeavy,Azure,Standard_D16s_v5,Virtual Machines Dsv5 Series,Standard_D16s_v5,Reservation,1 Year,1 Hour,415863.95125,2026-06-01T00:00:00Z
+C_DataHeavy,Azure,Standard_D16s_v5,Virtual Machines Dsv5 Series,Standard_D16s_v5,Reservation,3 Years,1 Hour,798778.755,2026-06-01T00:00:00Z

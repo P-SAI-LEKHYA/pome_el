@@ -1,0 +1,35 @@
+{
+  "compute_ondemand_monthly_usd": {
+    "C_DataHeavy": 589.84,
+    "B_Midsize": 294.92,
+    "A_Startup": 73.73
+  },
+  "compute_1yr_monthly_usd": {
+    "C_DataHeavy": 371.57,
+    "B_Midsize": 186.15,
+    "A_Startup": 46.72
+  },
+  "storage_gb_month_usd": 0.0912,
+  "egress_tiers": [
+    [
+      0.0,
+      10240.0,
+      0.1093
+    ],
+    [
+      10240.0,
+      51200.0,
+      0.085
+    ],
+    [
+      51200.0,
+      153600.0,
+      0.082
+    ],
+    [
+      153600.0,
+      null,
+      0.08
+    ]
+  ]
+}
