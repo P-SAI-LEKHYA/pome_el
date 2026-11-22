@@ -1,6 +1,6 @@
 import requests, pandas as pd
 
-API_KEY = "AIzaSyAZlKO10utCVCQpzV3J1D9UBCP2daZDILk"
+API_KEY = ""
 SERVICE_ID = "6F81-5844-456A"  # Compute Engine
 REGION = "asia-south1"         # Mumbai
 MACHINES = {"A_Startup": (2, 8), "B_Midsize": (8, 32), "C_DataHeavy": (16, 64)}  # (vCPU, RAM GB), n2-standard shape
