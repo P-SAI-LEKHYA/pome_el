@@ -32,19 +32,38 @@ for wl, sku in AZURE_SKUS.items():
     if not ri.empty:
         out["compute_1yr_monthly_usd"][wl] = float(ri.iloc[0]["retailPrice"]) / 12
 
-# storage: Premium SSD P30 (1024 GiB) divided by 1024 = per GB-month
-st = fetch(f"serviceName eq 'Storage' and armRegionName eq '{AZURE_REGION}' and "
-           f"contains(productName, 'Premium SSD Managed Disks') and contains(skuName, 'P30')")
-if st.empty:
-    print("NO storage rows for P30. Try contains(meterName,'P30') in the filter.")
-else:
-    print(st[["productName", "skuName", "meterName", "unitOfMeasure", "retailPrice", "type"]].to_string())
-    m = st[(st["type"] == "Consumption") & (st["skuName"] == "P30 LRS") &
-           (st["unitOfMeasure"].str.contains("Month"))]
-    if not m.empty:
-        out["storage_gb_month_usd"] = float(m.iloc[0]["retailPrice"]) / 1024
+# storage: Azure Premium SSD Managed Disks (Provisioned Tiers P1 to P80)
+TIER_GIB = {
+    "P1": 4, "P2": 8, "P3": 16, "P4": 32, "P6": 64, "P10": 128,
+    "P15": 256, "P20": 512, "P30": 1024, "P40": 2048, "P50": 4096,
+    "P60": 8192, "P70": 16384, "P80": 32768
+}
 
-# egress: Central India is in Azure bandwidth Zone 2
+out["storage_provisioned_tiers"] = []
+st = fetch(f"serviceName eq 'Storage' and armRegionName eq '{AZURE_REGION}' and "
+           f"contains(productName, 'Premium SSD Managed Disks')")
+if st.empty:
+    print("NO storage rows found for Premium SSD Managed Disks.")
+else:
+    lrs = st[(st["type"] == "Consumption") & (st["meterName"].str.endswith(" LRS Disk")) &
+             (~st["meterName"].str.contains("Mount|Burst"))]
+    for _, r in lrs.iterrows():
+        sku = r["skuName"].replace(" LRS", "").strip()
+        if sku in TIER_GIB:
+            out["storage_provisioned_tiers"].append({
+                "tier": sku,
+                "gib": TIER_GIB[sku],
+                "price_usd": float(r["retailPrice"])
+            })
+    out["storage_provisioned_tiers"].sort(key=lambda x: x["gib"])
+    # Reference per-GB rate for P30 (1024 GiB) kept for backward compatibility/reference
+    p30_match = [t for t in out["storage_provisioned_tiers"] if t["tier"] == "P30"]
+    out["storage_gb_month_usd"] = (p30_match[0]["price_usd"] / 1024) if p30_match else 0.13200195
+    print("Ingested provisioned disk tiers:", len(out["storage_provisioned_tiers"]))
+    for t in out["storage_provisioned_tiers"][:7]:
+        print(f"  {t['tier']} ({t['gib']} GiB): ${t['price_usd']:.2f}/mo")
+
+# egress: Central India (Zone 2) - Microsoft Global Network (Standard Default)
 bw = fetch("serviceName eq 'Bandwidth'")
 if bw.empty:
     print("No bandwidth rows returned.")
@@ -54,28 +73,21 @@ else:
     outbound = text.str.contains("Data Transfer Out|Outbound", case=False)
     cand = bw[zone2 & outbound & (bw["type"] == "Consumption") & bw["unitOfMeasure"].str.contains("GB")]
     cand.to_csv("azure_bandwidth_candidates.csv", index=False)
-    combos = cand[["productName", "meterName"]].drop_duplicates()
-    print("\nEgress candidates (Zone 2):")
-    print(combos.to_string())
-    pick = None
-    if AZURE_EGRESS_METER:
-        pick = cand[cand["meterName"] == AZURE_EGRESS_METER]
-    elif len(combos) == 1:
-        pick = cand
+    
+    # Filter strictly for Microsoft Global Network (MGN) and Standard Data Transfer Out
+    # to avoid mixing with Routing Preference: Internet (Transit ISP)
+    mgn = cand[(cand["productName"] == "Rtn Preference: MGN") & (cand["meterName"] == "Standard Data Transfer Out")]
+    if mgn.empty:
+        print("WARNING: No exact match for Rtn Preference: MGN. Inspect azure_bandwidth_candidates.csv")
     else:
-        p = cand[cand["meterName"].str.contains("Standard Data Transfer Out", case=False)]
-        pick = p if not p.empty else None
-    if pick is None or pick.empty:
-        print("\nCould not decide. If nothing printed above, check the zone text; otherwise copy the right")
-        print("meterName into AZURE_EGRESS_METER in config.py and rerun.")
-    else:
-        pick = pick.sort_values("tierMinimumUnits").drop_duplicates("tierMinimumUnits")
-        starts = pick["tierMinimumUnits"].astype(float).tolist()
-        prices = pick["retailPrice"].astype(float).tolist()
+        mgn = mgn.sort_values("tierMinimumUnits").drop_duplicates("tierMinimumUnits")
+        starts = mgn["tierMinimumUnits"].astype(float).tolist()
+        prices = mgn["retailPrice"].astype(float).tolist()
+        out["egress_tiers"] = []
         for i, s in enumerate(starts):
             end = starts[i + 1] if i + 1 < len(starts) else None
             out["egress_tiers"].append([s, end, prices[i]])
-        print("\nEgress tiers used:", out["egress_tiers"])
+        print("\nClean Azure MGN egress tiers used:", out["egress_tiers"])
 
 with open("azure_extra.json", "w") as f:
     json.dump(out, f, indent=2)

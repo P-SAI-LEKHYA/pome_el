@@ -1,8 +1,8 @@
 import pandas as pd
+from config import USD_INR, AWS_TYPES
 
 FILE = "aws_ec2_mumbai.csv"  # already downloaded, no need to download again
 TYPES = {"A_Startup": "m5.large", "B_Midsize": "m5.2xlarge", "C_DataHeavy": "m5.4xlarge"}
-USD_INR = 83.0  # CHANGE to the current RBI reference rate and note the date
 
 with open(FILE, encoding="utf-8") as f:
     header_row = next(i for i, line in enumerate(f) if line.startswith('"SKU"'))

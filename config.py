@@ -18,10 +18,21 @@ GCP_SERVICE_ID = "6F81-5844-456A"   # Compute Engine
 AZURE_EGRESS_METER = "Standard Data Transfer Out"        # exact meterName from azure_bandwidth_candidates.csv
 GCP_EGRESS_DESCRIPTION = None                            # exact description from gcp_egress_candidates.csv (default uses Standard tier)
 
-# Monthly support plan cost in USD. Fill from each provider's support pricing page. None = counted as 0.
-# Entry-level / Developer support: AWS $29/mo, Azure $29/mo, GCP $29/mo. (Set to 0 if comparing Basic free tier).
+# Support plan scenarios: "basic" (Free, $0/mo), "developer" (AWS max($29, 3%), Azure $29, GCP max($29, 3%)),
+# or "business" (AWS Business Support+ max($100, 10%), Azure Standard $100, GCP Enhanced $500 + 3%).
+# Note: AWS legacy Developer Support sunsets on January 1, 2027.
+DEFAULT_SUPPORT_TIER = "developer"
+
+# Baseline monthly support fees in USD (overridden by dynamic formulas in calculator.py)
 SUPPORT_MONTHLY_USD = {"AWS": 29.0, "Azure": 29.0, "GCP": 29.0}
 
-# Free monthly egress in GB. Set ONLY if the tier printout does not already show a 0-price first tier.
-# AWS provides 100 GB/mo free (not reflected in CSV starting at 0 GB). Azure & GCP already include 100 GB and 200 GB @ $0 in their rate tiers.
+# Free monthly egress in GB.
+# AWS provides 100 GB/mo free (not reflected in CSV starting at 0 GB). 
+# Azure MGN & GCP already include 100 GB and 200 GB @ $0 in their rate tiers.
 FREE_EGRESS_GB = {"AWS": 100, "Azure": 0, "GCP": 0}
+
+# Cloud Exit Waiver Conditions (2024 Policy Updates):
+# AWS, Azure, and GCP waive data egress fees when a customer permanently terminates their account 
+# and migrates 100% of data within 60 days (advance support ticket required).
+# Under EU Data Act (Regulation 2023/2854), all switching charges are prohibited from Jan 12, 2027.
+# For Indian accounts, waivers operate under voluntary global commercial policies, not statutory mandate.

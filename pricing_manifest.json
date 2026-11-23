@@ -1,0 +1,276 @@
+{
+  "meta": {
+    "title": "Cloud Computing Pricing and Competition Manifest",
+    "usd_inr": 92.97,
+    "fx_date": "20-11-2026",
+    "hours_per_month": 730,
+    "updated_at": "2026-11-22"
+  },
+  "workloads": {
+    "A_Startup": {
+      "vcpu": 2,
+      "ram_gb": 8,
+      "storage_gb": 100,
+      "egress_gb": 100
+    },
+    "B_Midsize": {
+      "vcpu": 8,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "egress_gb": 500
+    },
+    "C_DataHeavy": {
+      "vcpu": 16,
+      "ram_gb": 64,
+      "storage_gb": 5000,
+      "egress_gb": 2000
+    }
+  },
+  "providers": {
+    "AWS": {
+      "name": "Amazon Web Services",
+      "region": "ap-south-1 (Mumbai)",
+      "sku": {
+        "A_Startup": "m5.large",
+        "B_Midsize": "m5.2xlarge",
+        "C_DataHeavy": "m5.4xlarge"
+      },
+      "od": {
+        "C_DataHeavy": 589.84,
+        "B_Midsize": 294.92,
+        "A_Startup": 73.73
+      },
+      "ri": {
+        "C_DataHeavy": 371.57,
+        "B_Midsize": 186.15,
+        "A_Startup": 46.72
+      },
+      "storage": {
+        "model": "linear_gb",
+        "rate": 0.0912,
+        "name": "EBS General Purpose SSD (gp3)"
+      },
+      "egress_tiers": [
+        [
+          0.0,
+          10240.0,
+          0.1093
+        ],
+        [
+          10240.0,
+          51200.0,
+          0.085
+        ],
+        [
+          51200.0,
+          153600.0,
+          0.082
+        ],
+        [
+          153600.0,
+          null,
+          0.08
+        ]
+      ],
+      "free_egress": 100
+    },
+    "Azure": {
+      "name": "Microsoft Azure",
+      "region": "centralindia (Pune)",
+      "sku": {
+        "A_Startup": "Standard_D2s_v5",
+        "B_Midsize": "Standard_D8s_v5",
+        "C_DataHeavy": "Standard_D16s_v5"
+      },
+      "od": {
+        "A_Startup": 73.73,
+        "B_Midsize": 294.92,
+        "C_DataHeavy": 589.84
+      },
+      "ri": {
+        "A_Startup": 45.5,
+        "B_Midsize": 182.0,
+        "C_DataHeavy": 363.9166666666667
+      },
+      "storage": {
+        "model": "provisioned_tier",
+        "tiers": [
+          {
+            "tier": "P1",
+            "gib": 4,
+            "price_usd": 0.84
+          },
+          {
+            "tier": "P2",
+            "gib": 8,
+            "price_usd": 1.68
+          },
+          {
+            "tier": "P3",
+            "gib": 16,
+            "price_usd": 3.36
+          },
+          {
+            "tier": "P4",
+            "gib": 32,
+            "price_usd": 5.2795
+          },
+          {
+            "tier": "P6",
+            "gib": 64,
+            "price_usd": 10.207
+          },
+          {
+            "tier": "P10",
+            "gib": 128,
+            "price_usd": 19.71
+          },
+          {
+            "tier": "P15",
+            "gib": 256,
+            "price_usd": 38.012142
+          },
+          {
+            "tier": "P20",
+            "gib": 512,
+            "price_usd": 73.22
+          },
+          {
+            "tier": "P30",
+            "gib": 1024,
+            "price_usd": 135.17
+          },
+          {
+            "tier": "P40",
+            "gib": 2048,
+            "price_usd": 259.0457
+          },
+          {
+            "tier": "P50",
+            "gib": 4096,
+            "price_usd": 495.5657
+          },
+          {
+            "tier": "P60",
+            "gib": 8192,
+            "price_usd": 946.08
+          },
+          {
+            "tier": "P70",
+            "gib": 16384,
+            "price_usd": 1802.06
+          },
+          {
+            "tier": "P80",
+            "gib": 32768,
+            "price_usd": 3604.11
+          }
+        ],
+        "name": "Premium SSD Managed Disks (LRS)"
+      },
+      "egress_tiers": [
+        [
+          0.0,
+          100.0,
+          0.0
+        ],
+        [
+          100.0,
+          10335.0,
+          0.12
+        ],
+        [
+          10335.0,
+          51295.0,
+          0.085
+        ],
+        [
+          51295.0,
+          153695.0,
+          0.082
+        ],
+        [
+          153695.0,
+          512095.0,
+          0.08
+        ],
+        [
+          512095.0,
+          null,
+          0.08
+        ]
+      ],
+      "free_egress": 0
+    },
+    "GCP": {
+      "name": "Google Cloud Platform",
+      "region": "asia-south1 (Mumbai)",
+      "sku": {
+        "A_Startup": "N2-standard-2 equiv",
+        "B_Midsize": "N2-standard-8 equiv",
+        "C_DataHeavy": "N2-standard-16 equiv"
+      },
+      "od": {
+        "A_Startup": 85.15012,
+        "B_Midsize": 340.60048,
+        "C_DataHeavy": 681.20096
+      },
+      "ri": {
+        "A_Startup": 53.63748,
+        "B_Midsize": 214.54992,
+        "C_DataHeavy": 429.09984
+      },
+      "storage": {
+        "model": "linear_gb",
+        "rate": 0.12,
+        "name": "Balanced Persistent Disk (pd-balanced)"
+      },
+      "egress_tiers": [
+        [
+          0.0,
+          200.0,
+          0.0
+        ],
+        [
+          200.0,
+          10240.0,
+          0.11
+        ],
+        [
+          10240.0,
+          153600.0,
+          0.075
+        ],
+        [
+          153600.0,
+          null,
+          0.07
+        ]
+      ],
+      "free_egress": 0
+    }
+  },
+  "support_rules": {
+    "basic": {
+      "name": "Basic Support (Free, $0)",
+      "formula": "0"
+    },
+    "developer": {
+      "name": "Developer / Standard Support",
+      "aws": "max($29, 3%)",
+      "azure": "flat $29",
+      "gcp": "max($29, 3%)"
+    },
+    "business": {
+      "name": "Business Support+ / Production",
+      "aws": "max($100, 10% first $10k)",
+      "azure": "flat $100",
+      "gcp": "$500 + 3%"
+    }
+  },
+  "exit_policy": {
+    "repatriation_metric": "Standard tiered internet egress on 100% of stored data (routine multi-cloud friction)",
+    "waiver_metric": "$0.00 waiver for eligible permanent account termination and migration (2024 policy)",
+    "eu_data_act": "Switching charges completely banned from Jan 12, 2027 in EU; Indian accounts rely on voluntary CSP commercial waivers."
+  }
+}

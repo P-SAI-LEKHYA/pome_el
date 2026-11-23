@@ -30,17 +30,17 @@ SCORES = {
 }
 
 EVIDENCE = {
-    ("AWS", "egress_fees"): "AWS EC2 data transfer charges $0.1093/GB for first 10TB from Mumbai ap-south-1 with 100GB/mo free.",
+    ("AWS", "egress_fees"): "AWS charges $0.1093/GB beyond 100GB/mo free from Mumbai ap-south-1. Egress is waived only for full account terminations (voluntary policy in India; EU Data Act bans switching fees from Jan 12, 2027).",
     ("AWS", "proprietary_services"): "AWS DynamoDB API and IAM are tightly coupled to AWS runtime; non-standard API endpoints.",
     ("AWS", "commitment_terms"): "AWS 1-yr Standard Reserved Instances cannot be converted to other instance families without convertible penalty.",
     ("AWS", "bundling"): "AWS relies on AWS Activate credits ($100k) and partner network, but has no office productivity/OS bundling.",
     ("AWS", "migration_tools"): "AWS Database Migration Service (DMS) supports homogeneous/heterogeneous inbound migrations to AWS.",
-    ("Azure", "egress_fees"): "Azure Bandwidth Retail API quotes $0.120/GB for Central India standard egress after 100GB free tier.",
+    ("Azure", "egress_fees"): "Azure quotes $0.120/GB for Central India standard MGN egress after 100GB free tier. Offers $0 exit waiver for eligible account closures within 60 days.",
     ("Azure", "proprietary_services"): "Enterprise identity tightly tied to Microsoft Entra ID (formerly Azure AD) and Windows ecosystem.",
     ("Azure", "commitment_terms"): "Microsoft Azure reservation exchanges are subject to annual cancellation quotas and exchange restrictions.",
     ("Azure", "bundling"): "Azure Hybrid Benefit allows re-using Windows Server and SQL Server on-premise licenses to save up to 40-80%.",
     ("Azure", "migration_tools"): "Azure Migrate provides comprehensive discovery and lift-and-shift for VMware/Hyper-V into Azure.",
-    ("GCP", "egress_fees"): "GCP Standard tier egress is $0.11/GB with 200GB/mo free; Google announced zero fee for switching providers in 2024.",
+    ("GCP", "egress_fees"): "GCP Standard tier egress is $0.11/GB with 200GB/mo free; Google was first to eliminate exit fees for switching (requires full account termination ticket).",
     ("GCP", "proprietary_services"): "Kubernetes (GKE) and managed open-source engines allow easier application portability across clouds.",
     ("GCP", "commitment_terms"): "GCP Committed Use Discounts (CUDs) decouple vCPU and RAM commitments from specific machine instance types.",
     ("GCP", "bundling"): "Bundles with Google Workspace and BigQuery data analytics, but lacks dominant enterprise ERP/OS licensing.",

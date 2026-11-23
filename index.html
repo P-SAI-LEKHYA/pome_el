@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Pricing & Strategy — Indian Market Analysis</title>
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+      background: #f5f5f7;
+      color: #1d1d1f;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid #d2d2d7;
+      padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 52px;
+    }
+    .topbar-title { font-size: 14px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.01em; }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .fx-badge {
+      font-size: 12px; font-weight: 600; color: #0071e3;
+      background: #e8f0fe; border-radius: 20px; padding: 4px 14px;
+    }
+
+    /* ── TAB NAV ── */
+    .tab-nav {
+      display: flex; gap: 0;
+      background: #fff;
+      border-bottom: 1px solid #d2d2d7;
+      padding: 0 32px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none; border: none; border-bottom: 3px solid transparent;
+      padding: 14px 24px; font-size: 14px; font-weight: 600; color: #86868b;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .tab-btn:hover { color: #1d1d1f; }
+    .tab-btn.active { color: #0071e3; border-bottom-color: #0071e3; }
+
+    /* ── TAB CONTENT ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── CONTAINER ── */
+    .container { max-width: 1240px; margin: 0 auto; padding: 32px 24px 60px; }
+
+    /* ── SECTION HEADER ── */
+    .sec-header { margin-bottom: 24px; }
+    .sec-tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #0071e3; margin-bottom: 4px; }
+    .sec-title { font-size: 28px; font-weight: 800; letter-spacing: -0.025em; color: #1d1d1f; }
+    .sec-desc { font-size: 15px; color: #6e6e73; margin-top: 6px; max-width: 750px; }
+
+    /* ── CARDS ── */
+    .card {
+      background: #fff; border-radius: 16px; border: 1px solid #e5e5ea;
+      padding: 24px 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .card + .card { margin-top: 20px; }
+
+    /* ── SPLIT GRID (CONTROLS LEFT, CHARTS RIGHT) ── */
+    .calc-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+      align-items: stretch;
+    }
+    @media (max-width: 980px) {
+      .calc-split-grid { grid-template-columns: 1fr; }
+    }
+
+    .ctrl-label { display: block; font-size: 12px; font-weight: 700; color: #6e6e73; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+
+    /* Segmented Controls */
+    .seg { display: flex; background: #f5f5f7; border-radius: 10px; padding: 3px; gap: 3px; }
+    .seg button {
+      flex: 1; border: none; background: transparent; padding: 9px 8px;
+      font-size: 13px; font-weight: 600; color: #6e6e73; border-radius: 8px;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .seg button.on { background: #fff; color: #0071e3; font-weight: 700; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+
+    /* Sliders */
+    .slider-group { margin-top: 14px; }
+    .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .slider-name { font-size: 13px; font-weight: 700; color: #1d1d1f; display: flex; align-items: center; gap: 6px; }
+    .slider-badge {
+      font-size: 12px; font-weight: 700; color: #0071e3;
+      background: #e8f0fe; padding: 2px 9px; border-radius: 6px;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+    .range-input {
+      width: 100%; height: 6px; border-radius: 3px; background: #e5e5ea;
+      outline: none; -webkit-appearance: none; cursor: pointer; margin: 4px 0;
+    }
+    .range-input::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: #0071e3; cursor: pointer; box-shadow: 0 2px 6px rgba(0,113,227,0.35);
+      transition: transform 0.1s;
+    }
+    .range-input::-webkit-slider-thumb:hover { transform: scale(1.15); }
+    .range-ticks {
+      display: flex; justify-content: space-between; font-size: 11px;
+      color: #86868b; margin-top: 2px; font-family: ui-monospace, Menlo, monospace;
+    }
+
+    /* Winner Banner */
+    .winner-banner {
+      background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+      border: 1px solid #c8e6c9; border-radius: 12px; padding: 12px 16px;
+      margin-bottom: 18px; font-size: 13px; font-weight: 700; color: #1b5e20;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .winner-icon { font-size: 22px; line-height: 1; }
+    .winner-text { font-size: 14px; font-weight: 800; color: #1b5e20; }
+    .winner-sub { font-size: 12px; font-weight: 500; color: #2e7d32; margin-top: 2px; }
+
+    /* Select */
+    .sel {
+      width: 100%; padding: 9px 12px; font-size: 13px; font-weight: 500;
+      border: 1px solid #d2d2d7; border-radius: 10px; background: #fff;
+      color: #1d1d1f; outline: none; cursor: pointer;
+    }
+    .sel:focus { border-color: #0071e3; box-shadow: 0 0 0 3px rgba(0,113,227,0.15); }
+
+    /* Currency pills */
+    .cur-row { display: flex; gap: 8px; }
+    .cur-pill {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px; border: 2px solid #d2d2d7; border-radius: 10px;
+      font-size: 13px; font-weight: 600; color: #6e6e73; cursor: pointer; transition: all 0.2s;
+    }
+    .cur-pill:has(input:checked) { border-color: #0071e3; color: #0071e3; background: #e8f0fe; }
+    .cur-pill input { display: none; }
+
+    .spec-pill {
+      display: inline-block;
+      font-size: 12px; font-weight: 600; color: #49494d;
+      background: #f5f5f7; padding: 6px 12px; border-radius: 8px;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+
+    /* ── PROVIDER CARDS ── */
+    .prov-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 28px; }
+    @media (max-width: 900px) { .prov-grid { grid-template-columns: 1fr; } }
+
+    .prov {
+      background: #fff; border-radius: 16px; border: 1px solid #e5e5ea;
+      overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex; flex-direction: column;
+    }
+    .prov-top { padding: 4px 0 0 0; }
+    .prov-top.aws { background: #ff9900; }
+    .prov-top.azure { background: #0078d4; }
+    .prov-top.gcp { background: #ea4335; }
+
+    .prov-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+    .prov-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .prov-name { font-size: 18px; font-weight: 800; color: #1d1d1f; }
+    .prov-region {
+      font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    }
+    .prov-region.aws { background: #fff3e0; color: #e65100; }
+    .prov-region.azure { background: #e3f2fd; color: #1565c0; }
+    .prov-region.gcp { background: #fce4ec; color: #c62828; }
+
+    .prov-sku { font-size: 12px; color: #86868b; font-family: ui-monospace, Menlo, monospace; margin-bottom: 14px; }
+
+    /* Cost table */
+    .ct { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .ct td { padding: 7px 0; border-bottom: 1px solid #f0f0f0; }
+    .ct td:first-child { color: #6e6e73; }
+    .ct td:last-child { text-align: right; font-weight: 700; color: #1d1d1f; }
+    .ct .green { color: #34c759; }
+
+    /* Total box */
+    .tot-box {
+      background: #f5f5f7; border-radius: 12px; padding: 14px 16px; margin-top: 12px;
+    }
+    .tot-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+    .tot-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #86868b; }
+    .tot-val-od { font-size: 22px; font-weight: 900; color: #1d1d1f; letter-spacing: -0.02em; }
+    .tot-val-ri { font-size: 17px; font-weight: 800; color: #34c759; }
+    .met-row { display: flex; justify-content: space-between; font-size: 12px; padding-top: 5px; border-top: 1px solid #e5e5ea; margin-top: 5px; }
+    .met-label { color: #86868b; }
+    .met-amber { color: #ff9500; font-weight: 700; }
+    .met-red { color: #ff3b30; font-weight: 700; }
+
+    .prov-strat {
+      font-size: 12.5px; color: #6e6e73; padding-top: 12px; margin-top: auto;
+      border-top: 1px solid #f0f0f0; line-height: 1.5;
+    }
+
+    /* ── VERTICAL CHART BARS (IN SIDE CARD) ── */
+    .chart-title { font-size: 15px; font-weight: 700; color: #1d1d1f; margin-bottom: 2px; }
+    .chart-sub { font-size: 12px; color: #86868b; margin-bottom: 8px; }
+
+    .vchart-wrap { margin-top: 6px; margin-bottom: 8px; }
+    .vchart-area {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      height: 165px;
+      border-bottom: 2px solid #d2d2d7;
+      padding: 24px 8px 0;
+      position: relative;
+      background: linear-gradient(180deg, rgba(245,245,247,0.2) 0%, rgba(245,245,247,0.7) 100%);
+      border-radius: 10px 10px 0 0;
+    }
+    /* Dotted background grid lines */
+    .vchart-grid-line {
+      position: absolute;
+      left: 0; right: 0;
+      border-top: 1px dashed rgba(210, 210, 215, 0.6);
+      pointer-events: none;
+    }
+    .vchart-grid-line.l75 { top: 25%; }
+    .vchart-grid-line.l50 { top: 50%; }
+    .vchart-grid-line.l25 { top: 75%; }
+    .vchart-grid-label {
+      position: absolute;
+      right: 6px;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: #aeaeb2;
+      font-family: ui-monospace, Menlo, monospace;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .vbar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      height: 100%;
+      justify-content: flex-end;
+      padding: 0 4px;
+      position: relative;
+      z-index: 1;
+    }
+    .vbar-cols {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+    }
+    .vbar-col-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 1;
+      max-width: 48px;
+      height: 100%;
+    }
+    .vbar-pill {
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+      transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      min-height: 4px;
+    }
+    .vbar-pill.fill-blue {
+      background: linear-gradient(180deg, #5ac8fa 0%, #0071e3 100%);
+      box-shadow: 0 2px 6px rgba(0, 113, 227, 0.25);
+    }
+    .vbar-pill.fill-green {
+      background: linear-gradient(180deg, #30d158 0%, #34c759 100%);
+      box-shadow: 0 2px 6px rgba(52, 199, 89, 0.25);
+    }
+    .vbar-val-float {
+      font-size: 10px;
+      font-weight: 800;
+      color: #1d1d1f;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      font-family: ui-monospace, Menlo, monospace;
+      text-align: center;
+      transition: opacity 0.2s;
+    }
+    .vbar-val-float.green { color: #2e7d32; }
+    .vbar-val-float.orange { color: #d97706; }
+
+    /* Stacked column for decomposition */
+    .vbar-stacked-col {
+      width: 100%;
+      max-width: 54px;
+      height: 125px;
+      border-radius: 6px 6px 0 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column-reverse;
+      background: #f0f0f2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .vbar-stack-seg {
+      width: 100%;
+      transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .vbar-stack-seg.fill-indigo {
+      background: linear-gradient(180deg, #7c7ae8 0%, #5856d6 100%);
+    }
+    .vbar-stack-seg.fill-orange {
+      background: linear-gradient(180deg, #ffb340 0%, #ff9500 100%);
+    }
+
+    .vbar-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1d1d1f;
+      margin-top: 6px;
+      text-align: center;
+    }
+    .legend { display: flex; gap: 18px; font-size: 11.5px; color: #6e6e73; font-weight: 600; margin-top: 8px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 6px; vertical-align: middle; }
+
+    /* ── FIVE FORCES ── */
+    .ff-grid {
+      display: grid;
+      grid-template-areas:
+        ".       top     ."
+        "left    center  right"
+        ".       bottom  .";
+      grid-template-columns: 1fr 1.2fr 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 16px;
+    }
+    @media (max-width: 800px) {
+      .ff-grid { display: flex; flex-direction: column; }
+    }
+    .ff-top    { grid-area: top; }
+    .ff-left   { grid-area: left; }
+    .ff-center { grid-area: center; }
+    .ff-right  { grid-area: right; }
+    .ff-bottom { grid-area: bottom; }
+
+    .ff-box {
+      background: #fff; border: 1px solid #e5e5ea; border-radius: 14px; padding: 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .ff-center-box {
+      background: linear-gradient(135deg, #f0f0ff 0%, #e8f0fe 100%);
+      border: 2px solid #0071e3; border-radius: 16px; padding: 28px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,113,227,0.12);
+    }
+    .ff-badge {
+      display: inline-block; font-size: 11px; font-weight: 800; padding: 4px 12px;
+      border-radius: 20px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+    }
+    .ff-low { background: #d1fae5; color: #065f46; }
+    .ff-high { background: #fee2e2; color: #991b1b; }
+    .ff-mod { background: #fef3c7; color: #92400e; }
+    .ff-intense { background: #e0e7ff; color: #3730a3; }
+
+    .ff-h { font-size: 16px; font-weight: 800; color: #1d1d1f; margin-bottom: 6px; }
+    .ff-p { font-size: 13px; color: #6e6e73; line-height: 1.6; }
+    .ff-ul { list-style: none; margin-top: 8px; }
+    .ff-ul li { font-size: 13px; color: #6e6e73; margin-bottom: 6px; padding-left: 16px; position: relative; }
+    .ff-ul li::before { content: "→"; position: absolute; left: 0; color: #0071e3; font-weight: 700; }
+
+    .ff-insight {
+      margin-top: 16px; padding: 10px 16px; background: #e8f0fe; border-radius: 10px;
+      font-size: 13px; font-weight: 700; color: #0071e3; text-align: center;
+    }
+
+    /* ── GAME THEORY ── */
+    .payoff-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      border-radius: 12px; overflow: hidden; border: 1px solid #e5e5ea;
+      font-size: 14px;
+    }
+    .payoff-table th, .payoff-table td { padding: 18px; text-align: center; }
+    .payoff-table th { background: #f5f5f7; font-weight: 700; color: #6e6e73; font-size: 13px; }
+    .payoff-table td { border-top: 1px solid #e5e5ea; }
+    .payoff-table .row-header { background: #f5f5f7; text-align: left; font-weight: 700; color: #6e6e73; font-size: 13px; }
+
+    .nash-cell {
+      background: #d1fae5; border: 2px solid #34c759 !important;
+    }
+    .nash-val { font-size: 22px; font-weight: 900; color: #065f46; }
+    .nash-tag { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: #34c759; padding: 3px 10px; border-radius: 20px; margin-top: 6px; }
+    .trap-cell { background: #fef2f2; }
+    .trap-val { font-size: 18px; font-weight: 800; color: #dc2626; }
+    .trap-tag { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: #ef4444; padding: 3px 10px; border-radius: 20px; margin-top: 4px; }
+    .norm-val { font-size: 17px; font-weight: 700; color: #1d1d1f; }
+    .cell-note { font-size: 12px; color: #86868b; margin-top: 4px; }
+
+    .insight-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    @media (max-width: 800px) { .insight-cards { grid-template-columns: 1fr; } }
+    .i-card {
+      background: #f5f5f7; border-radius: 12px; padding: 20px;
+    }
+    .i-card-num { font-size: 12px; font-weight: 800; color: #0071e3; margin-bottom: 4px; }
+    .i-card-title { font-size: 15px; font-weight: 700; color: #1d1d1f; margin-bottom: 6px; }
+    .i-card-p { font-size: 13px; color: #6e6e73; line-height: 1.5; }
+
+    /* ── MARKET SHARE & LOCK-IN ── */
+    .ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 800px) { .ms-grid { grid-template-columns: 1fr; } }
+
+    .ms-bar-row { margin-bottom: 14px; }
+    .ms-bar-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .ms-track { background: #f0f0f0; height: 28px; border-radius: 8px; overflow: hidden; }
+    .ms-fill { height: 100%; border-radius: 8px 0 0 8px; transition: width 0.4s; }
+    .ms-fill.aws-c { background: linear-gradient(90deg, #ff9900, #ffb84d); }
+    .ms-fill.azure-c { background: linear-gradient(90deg, #0078d4, #40a9ff); }
+    .ms-fill.gcp-c { background: linear-gradient(90deg, #ea4335, #ff7961); }
+    .ms-fill.dom-c { background: linear-gradient(90deg, #86868b, #aeaeb2); }
+
+    /* Lock-in bars */
+    .li-fill { height: 100%; border-radius: 8px 0 0 8px; }
+    .li-fill.red { background: linear-gradient(90deg, #ff3b30, #ff6961); }
+    .li-fill.amber { background: linear-gradient(90deg, #ff9500, #ffb340); }
+    .li-fill.green { background: linear-gradient(90deg, #34c759, #5cd97e); }
+
+    /* Monte Carlo cards */
+    .mc-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+    .mc-box { text-align: center; padding: 16px; border-radius: 12px; border: 1px solid #e5e5ea; }
+    .mc-box.win { background: #fef2f2; border-color: #fecaca; }
+    .mc-num { font-size: 28px; font-weight: 900; }
+    .mc-label { font-size: 12px; font-weight: 700; margin-top: 2px; }
+    .mc-sub { font-size: 11px; color: #86868b; }
+
+    .dpdp-note {
+      margin-top: 20px; padding: 14px 18px; background: #fffbeb; border: 1px solid #fde68a;
+      border-radius: 10px; font-size: 13px; color: #92400e; line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center; padding: 24px; font-size: 12px; color: #86868b;
+      border-top: 1px solid #e5e5ea; margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ TOP BAR ══ -->
+  <div class="topbar">
+    <div class="topbar-title">☁️ Cloud Pricing & Strategy — Indian Market</div>
+    <div class="topbar-right">
+      <span class="fx-badge">₹92.97 / USD — FBIL 20 Nov 2026</span>
+    </div>
+  </div>
+
+  <!-- ══ TAB NAV ══ -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('calc')">💰 Cost Calculator</button>
+    <button class="tab-btn" onclick="showTab('porter')">🏗️ Porter's Five Forces</button>
+    <button class="tab-btn" onclick="showTab('game')">🎯 Game Theory</button>
+    <button class="tab-btn" onclick="showTab('market')">📊 Market Share & Lock-in</button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 1: COST CALCULATOR
+       ══════════════════════════════════════════════════════ -->
+  <div id="tab-calc" class="tab-panel active">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag">Empirical Economics</div>
+        <h2 class="sec-title">Cloud Cost & Workload Calculator</h2>
+        <p class="sec-desc">Compare on-demand vs. 1-year commitment pricing across AWS, Azure, and GCP for Indian datacenter regions, including hidden costs (storage, egress, support).</p>
+      </div>
+
+      <!-- Side-by-Side Cockpit: Controls Left, Real-Time Charts Right -->
+      <div class="calc-split-grid">
+        <!-- LEFT: Interactive Workload Controls & Sliders -->
+        <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+              <span class="ctrl-label" style="margin-bottom:0;">⚙️ Workload Configuration</span>
+              <span class="spec-pill" id="workload-spec">2 vCPU · 8 GB RAM · 100 GB Storage · 100 GB Egress</span>
+            </div>
+
+            <!-- Segmented Preset Bar -->
+            <div style="margin-bottom:16px;">
+              <span class="ctrl-label">Workload Preset</span>
+              <div class="seg">
+                <button id="btn-A_Startup" class="on" onclick="setWorkload('A_Startup')">Startup (A)</button>
+                <button id="btn-B_Midsize" onclick="setWorkload('B_Midsize')">Midsize (B)</button>
+                <button id="btn-C_DataHeavy" onclick="setWorkload('C_DataHeavy')">Data-Heavy (C)</button>
+                <button id="btn-Custom" onclick="setWorkload('Custom')">Custom</button>
+              </div>
+            </div>
+
+            <!-- Storage Volume Slider Bar -->
+            <div class="slider-group">
+              <div class="slider-header">
+                <span class="slider-name">💾 Storage Volume (SSD / Disk)</span>
+                <span id="lbl-storage" class="slider-badge">100 GB</span>
+              </div>
+              <input type="range" id="slider-storage" class="range-input" min="10" max="10000" step="10" value="100" oninput="onSliderChange()">
+              <div class="range-ticks">
+                <span>10 GB</span>
+                <span>1,000 GB (1 TB)</span>
+                <span>5,000 GB</span>
+                <span>10,000 GB</span>
+              </div>
+            </div>
+
+            <!-- Data Egress Slider Bar -->
+            <div class="slider-group">
+              <div class="slider-header">
+                <span class="slider-name">🌐 Monthly Outbound Egress</span>
+                <span id="lbl-egress" class="slider-badge">100 GB</span>
+              </div>
+              <input type="range" id="slider-egress" class="range-input" min="0" max="5000" step="10" value="100" oninput="onSliderChange()">
+              <div class="range-ticks">
+                <span>0 GB (Free tier)</span>
+                <span>500 GB</span>
+                <span>2,000 GB</span>
+                <span>5,000 GB</span>
+              </div>
+            </div>
+
+            <!-- Compute Scale Bar -->
+            <div style="margin-top:16px;">
+              <span class="ctrl-label">Compute Scale (vCPU & RAM)</span>
+              <div class="seg" id="seg-instance">
+                <button id="btn-inst-A" class="on" onclick="setInstanceTier('A_Startup')">2 vCPU / 8 GB</button>
+                <button id="btn-inst-B" onclick="setInstanceTier('B_Midsize')">8 vCPU / 32 GB</button>
+                <button id="btn-inst-C" onclick="setInstanceTier('C_DataHeavy')">16 vCPU / 64 GB</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Support & Currency row -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top:18px; padding-top:14px; border-top:1px solid #e5e5ea;">
+            <div>
+              <span class="ctrl-label">Support Plan</span>
+              <select id="support-tier" class="sel" onchange="recalculate()">
+                <option value="developer" selected>Developer / Standard (AWS/GCP max($29, 3%), Azure $29)</option>
+                <option value="basic">Basic Support (Free, $0/mo — Baseline)</option>
+                <option value="business">Business Support+ / Production (AWS max($100, 10%), Azure $100)</option>
+              </select>
+            </div>
+            <div>
+              <span class="ctrl-label">Currency</span>
+              <div class="cur-row">
+                <label class="cur-pill"><input type="radio" name="currency" value="INR" checked onchange="recalculate()"> ₹ INR</label>
+                <label class="cur-pill"><input type="radio" name="currency" value="USD" onchange="recalculate()"> $ USD</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Real-Time Comparative Bar Charts ("Side Only to View Changes") -->
+        <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <!-- Live Winner Banner -->
+            <div id="winner-banner" class="winner-banner">
+              <span class="winner-icon">🏆</span>
+              <div>
+                <div id="winner-title" class="winner-text">AWS is cheapest for this configuration</div>
+                <div id="winner-sub" class="winner-sub">Saves ₹379 vs Azure · ₹1,329 vs GCP per month</div>
+              </div>
+            </div>
+
+            <!-- Chart 1: Total Monthly Cost -->
+            <div class="chart-title">Total Monthly Cost Comparison</div>
+            <div class="chart-sub">On-Demand vs. 1-Year Commitment (Updates live with sliders)</div>
+            <div id="cost-bars"></div>
+            <div class="legend" style="margin-bottom: 18px;">
+              <div><span class="legend-dot" style="background:#0071e3;"></span> On-Demand</div>
+              <div><span class="legend-dot" style="background:#34c759;"></span> 1-Year Commitment</div>
+            </div>
+
+            <!-- Chart 2: Cost Decomposition -->
+            <div class="chart-title" style="padding-top:14px; border-top:1px solid #f0f0f0;">Cost Decomposition</div>
+            <div class="chart-sub">Base Compute vs. Hidden Extras (Storage + Egress + Support)</div>
+            <div id="breakdown-bars"></div>
+            <div class="legend">
+              <div><span class="legend-dot" style="background:#5856d6;"></span> Compute</div>
+              <div><span class="legend-dot" style="background:#ff9500;"></span> Hidden Extras</div>
+            </div>
+          </div>
+
+          <!-- Mini Quick Metrics Strip -->
+          <div style="display:flex; justify-content:space-between; font-size:11.5px; color:#6e6e73; padding-top:10px; border-top:1px solid #f0f0f0; margin-top:12px;">
+            <span>Egress Free Tier: AWS 100GB · Azure 100GB · GCP 200GB</span>
+            <span style="font-weight:700; color:#0071e3;">Live Exchange Rate: ₹92.97/USD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Provider Breakdown Cards Below -->
+      <div class="prov-grid">
+        <!-- AWS -->
+        <div class="prov">
+          <div class="prov-top aws"></div>
+          <div class="prov-body">
+            <div class="prov-head">
+              <span class="prov-name">AWS</span>
+              <span class="prov-region aws">Mumbai</span>
+            </div>
+            <div class="prov-sku">SKU: <span id="aws-sku">m5.large</span></div>
+            <table class="ct">
+              <tr><td>Compute (On-Demand)</td><td id="aws-od">—</td></tr>
+              <tr><td>Compute (1-Yr RI)</td><td class="green" id="aws-ri">—</td></tr>
+              <tr><td>Storage (gp3 EBS)</td><td id="aws-storage">—</td></tr>
+              <tr><td>Data Egress</td><td id="aws-egress">—</td></tr>
+              <tr><td>Support Plan</td><td id="aws-support">—</td></tr>
+            </table>
+            <div class="tot-box">
+              <div class="tot-row"><span class="tot-label">On-Demand Total</span><span class="tot-val-od" id="aws-total-od">—</span></div>
+              <div class="tot-row"><span class="tot-label" style="color:#34c759;">1-Yr RI Total</span><span class="tot-val-ri" id="aws-total-ri">—</span></div>
+              <div class="met-row"><span class="met-label">Hidden Cost Share</span><span class="met-amber" id="aws-hidden">—</span></div>
+              <div class="met-row" title="Routine data egress friction when moving 100% stored data to another cloud"><span class="met-label">Repatriation Toll</span><span class="met-red" id="aws-exit">—</span></div>
+              <div class="met-row" title="Official policy: $0 waiver when permanently terminating account and migrating all data within 60 days"><span class="met-label">Cloud Exit Waiver</span><span class="green" style="font-weight:700;">₹0 ($0)</span></div>
+            </div>
+            <div class="prov-strat"><strong>Strategy:</strong> Scale & Cost Leadership. Lowest gp3 storage ($0.0912/GB). 100 GB/mo free egress.</div>
+          </div>
+        </div>
+
+        <!-- Azure -->
+        <div class="prov">
+          <div class="prov-top azure"></div>
+          <div class="prov-body">
+            <div class="prov-head">
+              <span class="prov-name">Azure</span>
+              <span class="prov-region azure">Central India</span>
+            </div>
+            <div class="prov-sku">SKU: <span id="azure-sku">Standard_D2s_v5</span></div>
+            <table class="ct">
+              <tr><td>Compute (On-Demand)</td><td id="azure-od">—</td></tr>
+              <tr><td>Compute (1-Yr RI)</td><td class="green" id="azure-ri">—</td></tr>
+              <tr><td>Storage (<span id="azure-disk-label">P10 SSD</span>)</td><td id="azure-storage">—</td></tr>
+              <tr><td>Data Egress (MGN)</td><td id="azure-egress">—</td></tr>
+              <tr><td>Support Plan</td><td id="azure-support">—</td></tr>
+            </table>
+            <div class="tot-box">
+              <div class="tot-row"><span class="tot-label">On-Demand Total</span><span class="tot-val-od" id="azure-total-od">—</span></div>
+              <div class="tot-row"><span class="tot-label" style="color:#34c759;">1-Yr RI Total</span><span class="tot-val-ri" id="azure-total-ri">—</span></div>
+              <div class="met-row"><span class="met-label">Hidden Cost Share</span><span class="met-amber" id="azure-hidden">—</span></div>
+              <div class="met-row" title="Routine data egress friction when moving 100% stored data to another cloud"><span class="met-label">Repatriation Toll</span><span class="met-red" id="azure-exit">—</span></div>
+              <div class="met-row" title="Official policy: $0 waiver when permanently terminating account and migrating all data within 60 days"><span class="met-label">Cloud Exit Waiver</span><span class="green" style="font-weight:700;">₹0 ($0)</span></div>
+            </div>
+            <div class="prov-strat"><strong>Strategy:</strong> Enterprise Bundling. Lowest 1-Yr RI ($45.50), but provisioned disk tiering creates storage step-ups.</div>
+          </div>
+        </div>
+
+        <!-- GCP -->
+        <div class="prov">
+          <div class="prov-top gcp"></div>
+          <div class="prov-body">
+            <div class="prov-head">
+              <span class="prov-name">Google Cloud</span>
+              <span class="prov-region gcp">Mumbai</span>
+            </div>
+            <div class="prov-sku">SKU: <span id="gcp-sku">N2-standard-2 equiv</span></div>
+            <table class="ct">
+              <tr><td>Compute (On-Demand)</td><td id="gcp-od">—</td></tr>
+              <tr><td>Compute (1-Yr CUD)</td><td class="green" id="gcp-ri">—</td></tr>
+              <tr><td>Storage (Balanced PD)</td><td id="gcp-storage">—</td></tr>
+              <tr><td>Data Egress (Std)</td><td id="gcp-egress">—</td></tr>
+              <tr><td>Support Plan</td><td id="gcp-support">—</td></tr>
+            </table>
+            <div class="tot-box">
+              <div class="tot-row"><span class="tot-label">On-Demand Total</span><span class="tot-val-od" id="gcp-total-od">—</span></div>
+              <div class="tot-row"><span class="tot-label" style="color:#34c759;">1-Yr CUD Total</span><span class="tot-val-ri" id="gcp-total-ri">—</span></div>
+              <div class="met-row"><span class="met-label">Hidden Cost Share</span><span class="met-amber" id="gcp-hidden">—</span></div>
+              <div class="met-row" title="Routine data egress friction when moving 100% stored data to another cloud"><span class="met-label">Repatriation Toll</span><span class="met-red" id="gcp-exit">—</span></div>
+              <div class="met-row" title="Official policy: $0 waiver when permanently terminating account and migrating all data within 60 days"><span class="met-label">Cloud Exit Waiver</span><span class="green" style="font-weight:700;">₹0 ($0)</span></div>
+            </div>
+            <div class="prov-strat"><strong>Strategy:</strong> Open Standards & AI/Data. 200 GB free standard egress. Pioneered zero fees for full cloud exit.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 2: PORTER'S FIVE FORCES
+       ══════════════════════════════════════════════════════ -->
+  <div id="tab-porter" class="tab-panel">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag">Industrial Organization</div>
+        <h2 class="sec-title">Porter's Five Forces — Cloud Industry Structure</h2>
+        <p class="sec-desc">Structural analysis explaining why hyperscalers protect margins through asymmetric switching costs and non-compute fees in the Indian cloud market.</p>
+      </div>
+
+      <div class="ff-grid">
+        <!-- Top: New Entrants -->
+        <div class="ff-top">
+          <div class="ff-box" style="text-align:center;">
+            <span class="ff-badge ff-low">Threat: LOW</span>
+            <h4 class="ff-h">Threat of New Entrants</h4>
+            <p class="ff-p">Building hyperscale datacenters requires tens of billions in annual CapEx. Securing Nvidia AI accelerators (H100/B200), subsea fiber landing rights in Mumbai, and dedicated power grids creates near-impenetrable barriers.</p>
+          </div>
+        </div>
+
+        <!-- Left: Supplier Power -->
+        <div class="ff-left">
+          <div class="ff-box">
+            <span class="ff-badge ff-high">Power: HIGH</span>
+            <h4 class="ff-h">Supplier Power</h4>
+            <ul class="ff-ul">
+              <li><strong>Semiconductors:</strong> Heavy dependence on Nvidia, TSMC, Intel/AMD</li>
+              <li><strong>Indian Infra:</strong> High industrial electricity tariffs (MSEDCL) and real estate scarcity in Mumbai & Pune</li>
+              <li><strong>Software:</strong> High licensing for Windows Server and Oracle stacks</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Center: Rivalry -->
+        <div class="ff-center">
+          <div class="ff-center-box">
+            <span class="ff-badge ff-intense">INTENSE OLIGOPOLY</span>
+            <h3 style="font-size:20px; font-weight:900; color:#1d1d1f; margin-top:4px;">Industry Rivalry</h3>
+            <p style="font-size:13px; color:#6e6e73; margin-top:10px; line-height:1.6;">AWS, Azure & GCP hold 77% of Indian enterprise spend. Raw compute prices are transparent and hyper-competitive, pushing providers to extract rents through storage markups, tiered egress, and software bundling.</p>
+            <div class="ff-insight">Compute Margins Compress → Lock-in & Egress Monetize</div>
+          </div>
+        </div>
+
+        <!-- Right: Buyer Power -->
+        <div class="ff-right">
+          <div class="ff-box">
+            <span class="ff-badge ff-mod">Power: LOW–MODERATE</span>
+            <h4 class="ff-h">Buyer Power</h4>
+            <ul class="ff-ul">
+              <li><strong>Startups & Midsize:</strong> Complete price-takers with zero customized discounting power</li>
+              <li><strong>Egress Taxes:</strong> Repatriating 5 TB costs ~₹50,000 in exit penalties</li>
+              <li><strong>Proprietary APIs:</strong> Migrating off DynamoDB or Entra ID costs millions in refactoring</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bottom: Substitutes -->
+        <div class="ff-bottom">
+          <div class="ff-box" style="text-align:center;">
+            <span class="ff-badge ff-low">Threat: LOW</span>
+            <h4 class="ff-h">Threat of Substitutes</h4>
+            <p class="ff-p">Private on-prem datacenters require massive upfront CapEx, 3–5 year amortization, and specialized talent. In an era of dynamic peak scaling (Diwali sales, IPL streaming), private infra cannot match hyperscale elasticity.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Porter's Generic Strategies Matrix -->
+      <div class="card" style="margin-top: 28px;">
+        <div class="chart-title" style="font-size: 18px; margin-bottom: 4px;">Porter's Generic Strategies — Hyperscaler Positioning in India</div>
+        <div class="chart-sub" style="margin-bottom: 20px;">How AWS, Azure, GCP, and Domestic CSPs map to Michael Porter's Cost Leadership, Differentiation, and Focus strategies.</div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+          <!-- AWS -->
+          <div style="background: #fff8e1; border: 1px solid #ffe082; border-radius: 12px; padding: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:16px; font-weight:800; color:#b78103;">AWS — Cost Leadership via Scale</span>
+              <span style="font-size:11px; font-weight:700; background:#ffecb3; color:#795548; padding:3px 8px; border-radius:6px;">Broad Market</span>
+            </div>
+            <p style="font-size:13px; color:#5d4037; line-height:1.55;">
+              Amazon leverages monumental global infrastructure scale to drive down unit costs. AWS offers the lowest gp3 storage price ($0.0912/GB/mo) and a generous 100 GB/mo free internet egress allowance. Custom in-house silicon (Graviton) delivers industry-leading price-performance ratios.
+            </p>
+          </div>
+
+          <!-- Azure -->
+          <div style="background: #e3f2fd; border: 1px solid #90caf9; border-radius: 12px; padding: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:16px; font-weight:800; color:#1565c0;">Microsoft Azure — Differentiation via Ecosystem Bundling</span>
+              <span style="font-size:11px; font-weight:700; background:#bbdefb; color:#0d47a1; padding:3px 8px; border-radius:6px;">Broad Enterprise</span>
+            </div>
+            <p style="font-size:13px; color:#1e3c72; line-height:1.55;">
+              Azure monetizes enterprise entrenchment with Microsoft 365, Windows Server, and Active Directory (Entra ID). Offers the lowest 1-year reserved compute rate ($45.50/mo) and Azure Hybrid Benefit discounts, but charges a 45% premium on storage ($0.132/GB) and high egress penalties.
+            </p>
+          </div>
+
+          <!-- GCP -->
+          <div style="background: #fce4ec; border: 1px solid #f8bbd0; border-radius: 12px; padding: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:16px; font-weight:800; color:#c2185b;">Google Cloud — Differentiation via Open Standards & AI</span>
+              <span style="font-size:11px; font-weight:700; background:#f8bbd0; color:#880e4f; padding:3px 8px; border-radius:6px;">Tech / Data-Driven</span>
+            </div>
+            <p style="font-size:13px; color:#4a148c; line-height:1.55;">
+              Google differentiates on Kubernetes (GKE), Vertex AI, and BigQuery analytics. Google champions open-source portability and became the first hyperscaler to offer zero exit fees for customers migrating away, actively disrupting the AWS-Azure oligopolistic equilibrium.
+            </p>
+          </div>
+
+          <!-- Domestic CSPs -->
+          <div style="background: #f1f8e9; border: 1px solid #c5e1a5; border-radius: 12px; padding: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:16px; font-weight:800; color:#33691e;">Domestic CSPs — Focus Strategy on Data Sovereignty</span>
+              <span style="font-size:11px; font-weight:700; background:#dcedc8; color:#1b5e20; padding:3px 8px; border-radius:6px;">Niche / Regulated</span>
+            </div>
+            <p style="font-size:13px; color:#1b5e20; line-height:1.55;">
+              CtrlS, Yotta, Tata Communications, and Jio Cloud serve regulated sectors (BFSI, public sector, defense). They capture 23% of Indian spend by guaranteeing strict adherence to the DPDP Act 2023 and RBI data localization rules requiring Indian data to never leave sovereign boundaries.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 3: GAME THEORY
+       ══════════════════════════════════════════════════════ -->
+  <div id="tab-game" class="tab-panel">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag">Game Theory & Strategic Interaction</div>
+        <h2 class="sec-title">The Oligopoly Egress & Pricing Dilemma</h2>
+        <p class="sec-desc">Why do cloud providers maintain high egress fees when optical transit costs &lt; $0.001/GB? A simultaneous strategic game between AWS and Azure.</p>
+      </div>
+
+      <div class="card">
+        <table class="payoff-table">
+          <thead>
+            <tr>
+              <th colspan="2" rowspan="2" style="width:200px;">Payoffs: (AWS, Azure)<br><span style="font-weight:400; font-size:11px; color:#aeaeb2;">Normalized economic profit units</span></th>
+              <th colspan="2" style="background:#e3f2fd; color:#1565c0;">Microsoft Azure Strategy</th>
+            </tr>
+            <tr>
+              <th>High Egress & Lock-in</th>
+              <th>Zero Egress & Open</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th rowspan="2" class="row-header" style="background:#fff3e0; color:#e65100; width:140px;">AWS<br>Strategy</th>
+              <td class="row-header">High Egress & Lock-in</td>
+              <td class="nash-cell">
+                <div class="nash-val">(+12 , +10)</div>
+                <div class="nash-tag">★ NASH EQUILIBRIUM</div>
+                <div class="cell-note">Both monetize data inertia; customers remain captive</div>
+              </td>
+              <td>
+                <div class="norm-val">(+16 , +3)</div>
+                <div class="cell-note">AWS exploits scale; Azure loses barrier</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="row-header">Zero Egress & Open</td>
+              <td>
+                <div class="norm-val">(+4 , +14)</div>
+                <div class="cell-note">Azure captures enterprise migrations</div>
+              </td>
+              <td class="trap-cell">
+                <div class="trap-val">(+6 , +5)</div>
+                <div class="trap-tag">COMMODITY TRAP</div>
+                <div class="cell-note">Fierce price war strips all non-compute rents</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insight-cards">
+        <div class="i-card">
+          <div class="i-card-num">01</div>
+          <h4 class="i-card-title">Dominant Strategy</h4>
+          <p class="i-card-p">For both AWS and Azure, maintaining high egress tolls ($0.11–$0.12/GB) strictly dominates waiving fees, regardless of the competitor's move.</p>
+        </div>
+        <div class="i-card">
+          <div class="i-card-num">02</div>
+          <h4 class="i-card-title">Prisoner's Dilemma</h4>
+          <p class="i-card-p">While consumers benefit most from open standards (+6, +5), individual profit-maximization traps the market in the high-barrier Nash Equilibrium (+12, +10).</p>
+        </div>
+        <div class="i-card">
+          <div class="i-card-num">03</div>
+          <h4 class="i-card-title">GCP's Disruption</h4>
+          <p class="i-card-p">With only 12% Indian market share, GCP broke ranks in 2024 to waive egress switching fees — strategically destabilizing the AWS-Azure equilibrium.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TAB 4: MARKET SHARE & LOCK-IN
+       ══════════════════════════════════════════════════════ -->
+  <div id="tab-market" class="tab-panel">
+    <div class="container">
+      <div class="sec-header">
+        <div class="sec-tag">Market Architecture</div>
+        <h2 class="sec-title">Market Share & Vendor Lock-in Index</h2>
+        <p class="sec-desc">Indian market distribution vs. global benchmarks, and our quantitative 5-criterion Lock-in Index with Monte Carlo sensitivity analysis.</p>
+      </div>
+
+      <div class="ms-grid">
+        <!-- Market Share -->
+        <div class="card">
+          <div class="chart-title">Cloud Infrastructure Market Share</div>
+          <div class="chart-sub">India 2025–2026 est. vs. Global (Synergy/Canalys)</div>
+
+          <div class="ms-bar-row">
+            <div class="ms-bar-label"><span>AWS</span><span style="color:#0071e3;">India 35% · Global 31%</span></div>
+            <div class="ms-track"><div class="ms-fill aws-c" style="width:35%;"></div></div>
+          </div>
+          <div class="ms-bar-row">
+            <div class="ms-bar-label"><span>Azure</span><span style="color:#0071e3;">India 30% · Global 25%</span></div>
+            <div class="ms-track"><div class="ms-fill azure-c" style="width:30%;"></div></div>
+          </div>
+          <div class="ms-bar-row">
+            <div class="ms-bar-label"><span>Google Cloud</span><span style="color:#0071e3;">India 12% · Global 11%</span></div>
+            <div class="ms-track"><div class="ms-fill gcp-c" style="width:12%;"></div></div>
+          </div>
+          <div class="ms-bar-row">
+            <div class="ms-bar-label"><span>Domestic (CtrlS, Yotta, Tata, Jio)</span><span style="color:#86868b;">India 23% · Global 33%</span></div>
+            <div class="ms-track"><div class="ms-fill dom-c" style="width:23%;"></div></div>
+          </div>
+
+          <div class="dpdp-note">
+            <strong>📋 DPDP Act & Data Localization:</strong> Domestic CSPs retain 23% market share due to RBI mandates requiring banking & payments data to be stored exclusively on Indian soil.
+          </div>
+        </div>
+
+        <!-- Lock-in Index -->
+        <div class="card">
+          <div class="chart-title">Vendor Lock-in Index</div>
+          <div class="chart-sub">Score 1.0–5.0 (5 = hardest to leave) via <code style="background:#f5f5f7; padding:2px 6px; border-radius:4px; font-size:12px;">lockin.py</code></div>
+
+          <div class="ms-bar-row">
+            <div class="ms-bar-label"><span>Azure — 4.45 / 5.0</span><span style="color:#ff3b30; font-weight:700;">Highest Barrier</span></div>
+            <div class="ms-track"><div class="li-fill red" style="width:89%;"></div></div>
+          </div>
+          <div class="ms-bar-row">
+            <div class="ms-bar-label"><span>AWS — 3.90 / 5.0</span><span style="color:#ff9500; font-weight:700;">Moderate–High</span></div>
+            <div class="ms-track"><div class="li-fill amber" style="width:78%;"></div></div>
+          </div>
+          <div class="ms-bar-row">
+            <div class="ms-bar-label"><span>GCP — 2.70 / 5.0</span><span style="color:#34c759; font-weight:700;">Lowest (Open Standards)</span></div>
+            <div class="ms-track"><div class="li-fill green" style="width:54%;"></div></div>
+          </div>
+
+          <!-- Monte Carlo -->
+          <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e5e5ea;">
+            <div style="font-size:14px; font-weight:700; color:#1d1d1f; margin-bottom:10px;">Monte Carlo — 5,000 Random Weight Simulations</div>
+            <div class="mc-row">
+              <div class="mc-box win">
+                <div class="mc-num" style="color:#ff3b30;">100%</div>
+                <div class="mc-label" style="color:#dc2626;">Azure Wins</div>
+                <div class="mc-sub">Highest lock-in in all runs</div>
+              </div>
+              <div class="mc-box">
+                <div class="mc-num" style="color:#aeaeb2;">0%</div>
+                <div class="mc-label" style="color:#86868b;">AWS</div>
+                <div class="mc-sub">Baseline: 3.90</div>
+              </div>
+              <div class="mc-box">
+                <div class="mc-num" style="color:#aeaeb2;">0%</div>
+                <div class="mc-label" style="color:#86868b;">GCP</div>
+                <div class="mc-sub">Baseline: 2.70</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Market Size & Growth Strip -->
+      <div class="card" style="margin-top: 24px;">
+        <div class="chart-title" style="font-size: 18px; margin-bottom: 4px;">Indian Cloud Computing Market — Growth & Size Dynamics</div>
+        <div class="chart-sub" style="margin-bottom: 18px;">Empirical macro data from IDC, Canalys, and Synergy Research Group (2024–2028 forecast).</div>
+
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+          <div style="background:#f5f5f7; border-radius:12px; padding:18px; text-align:center;">
+            <div style="font-size:24px; font-weight:900; color:#0071e3;">$13.1B</div>
+            <div style="font-size:12px; font-weight:700; color:#1d1d1f; margin-top:4px;">2024 Market Size</div>
+            <div style="font-size:11px; color:#86868b; margin-top:2px;">Indian Cloud Infra & Platform</div>
+          </div>
+          <div style="background:#f5f5f7; border-radius:12px; padding:18px; text-align:center;">
+            <div style="font-size:24px; font-weight:900; color:#34c759;">26.2%</div>
+            <div style="font-size:12px; font-weight:700; color:#1d1d1f; margin-top:4px;">Annual Growth (CAGR)</div>
+            <div style="font-size:11px; color:#86868b; margin-top:2px;">One of world's fastest growing</div>
+          </div>
+          <div style="background:#f5f5f7; border-radius:12px; padding:18px; text-align:center;">
+            <div style="font-size:24px; font-weight:900; color:#5856d6;">$24.2B</div>
+            <div style="font-size:12px; font-weight:700; color:#1d1d1f; margin-top:4px;">2028 Projection</div>
+            <div style="font-size:11px; color:#86868b; margin-top:2px;">Driven by GenAI & BFSI digitization</div>
+          </div>
+          <div style="background:#f5f5f7; border-radius:12px; padding:18px; text-align:center;">
+            <div style="font-size:24px; font-weight:900; color:#ff9500;">77%</div>
+            <div style="font-size:12px; font-weight:700; color:#1d1d1f; margin-top:4px;">Hyperscaler Triopoly</div>
+            <div style="font-size:11px; color:#86868b; margin-top:2px;">AWS, Azure, GCP combined share</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lock-in Index Criteria & Justification Table -->
+      <div class="card" style="margin-top: 24px;">
+        <div class="chart-title" style="font-size: 18px; margin-bottom: 4px;">Lock-in Index Criteria & Quantitative Weightings Breakdown</div>
+        <div class="chart-sub" style="margin-bottom: 16px;">Our 5-criterion scoring framework (1 = easy migration, 5 = severe lock-in) backed by official pricing documentation.</div>
+
+        <table class="payoff-table" style="font-size: 13px; text-align: left;">
+          <thead>
+            <tr>
+              <th style="text-align: left;">Criterion</th>
+              <th style="text-align: center; width: 80px;">Weight</th>
+              <th style="text-align: center; width: 80px; color:#e65100;">AWS</th>
+              <th style="text-align: center; width: 80px; color:#1565c0;">Azure</th>
+              <th style="text-align: center; width: 80px; color:#c62828;">GCP</th>
+              <th style="text-align: left;">Evidence & Academic Justification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Egress Fees & Exit Tolls</strong></td>
+              <td style="text-align: center; font-weight: 700;">25%</td>
+              <td style="text-align: center; font-weight: 800;">4 / 5</td>
+              <td style="text-align: center; font-weight: 800;">4 / 5</td>
+              <td style="text-align: center; font-weight: 800; color:#34c759;">3 / 5</td>
+              <td>AWS ($0.1093/GB) and Azure ($0.12/GB) penalize outbound traffic beyond 100GB. GCP announced zero fee for switching providers in 2024.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Proprietary Services (PaaS/DB)</strong></td>
+              <td style="text-align: center; font-weight: 700;">25%</td>
+              <td style="text-align: center; font-weight: 800; color:#ff3b30;">5 / 5</td>
+              <td style="text-align: center; font-weight: 800; color:#ff3b30;">5 / 5</td>
+              <td style="text-align: center; font-weight: 800; color:#34c759;">3 / 5</td>
+              <td>AWS DynamoDB & Lambda runtime lock-in. Azure Entra ID & Cosmos DB tightly coupled. GCP leverages open-source engines (Kubernetes, ANSI SQL).</td>
+            </tr>
+            <tr>
+              <td><strong>3. Commitment Terms (RIs / CUDs)</strong></td>
+              <td style="text-align: center; font-weight: 700;">15%</td>
+              <td style="text-align: center; font-weight: 800;">4 / 5</td>
+              <td style="text-align: center; font-weight: 800;">4 / 5</td>
+              <td style="text-align: center; font-weight: 800; color:#34c759;">2 / 5</td>
+              <td>AWS & Azure enforce rigid instance-family or financial lock-in with exchange penalties. GCP CUDs decouple vCPU and RAM across machine families.</td>
+            </tr>
+            <tr>
+              <td><strong>4. Enterprise Bundling Leverage</strong></td>
+              <td style="text-align: center; font-weight: 700;">20%</td>
+              <td style="text-align: center; font-weight: 800;">3 / 5</td>
+              <td style="text-align: center; font-weight: 800; color:#ff3b30;">5 / 5</td>
+              <td style="text-align: center; font-weight: 800;">3 / 5</td>
+              <td>Azure Enterprise Agreements (EA) bundle Windows Server, SQL Server, and M365 with up to 80% discount (Azure Hybrid Benefit), deterring migration.</td>
+            </tr>
+            <tr>
+              <td><strong>5. Outbound Migration Tools</strong></td>
+              <td style="text-align: center; font-weight: 700;">15%</td>
+              <td style="text-align: center; font-weight: 800;">3 / 5</td>
+              <td style="text-align: center; font-weight: 800;">4 / 5</td>
+              <td style="text-align: center; font-weight: 800; color:#34c759;">2 / 5</td>
+              <td>All providers offer frictionless inbound tools (DMS, Azure Migrate), but GCP actively builds multi-cloud tools (BigQuery Omni querying AWS S3/Azure).</td>
+            </tr>
+            <tr style="background:#f5f5f7; font-weight:800;">
+              <td><strong>Composite Lock-in Score</strong></td>
+              <td style="text-align: center;">100%</td>
+              <td style="text-align: center; color:#ff9500; font-size:15px;">3.90</td>
+              <td style="text-align: center; color:#ff3b30; font-size:15px;">4.45</td>
+              <td style="text-align: center; color:#34c759; font-size:15px;">2.70</td>
+              <td><em>Azure holds highest switching barrier across 100% of 5,000 Monte Carlo random weight iterations.</em></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Principles of Management & Economics · Prices as of 20 Nov 2026 · Exchange rate ₹92.97/USD (FBIL/RBI) · Data from official pricing pages
+  </div>
+
+  <!-- ══ SCRIPT ══ -->
+  <script>
+    /* ── Tab Switching ── */
+    function showTab(id) {
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.getElementById('tab-' + id).classList.add('active');
+      var btns = document.querySelectorAll('.tab-btn');
+      var map = { calc: 0, porter: 1, game: 2, market: 3 };
+      btns[map[id]].classList.add('active');
+    }
+
+    /* ── Single Source of Truth Manifest & Dynamic Loader ── */
+    var FALLBACK_MANIFEST = {"meta":{"title":"Cloud Computing Pricing and Competition Manifest","usd_inr":92.97,"fx_date":"20-11-2026","hours_per_month":730,"updated_at":"2026-11-22"},"workloads":{"A_Startup":{"vcpu":2,"ram_gb":8,"storage_gb":100,"egress_gb":100},"B_Midsize":{"vcpu":8,"ram_gb":32,"storage_gb":1000,"egress_gb":500},"C_DataHeavy":{"vcpu":16,"ram_gb":64,"storage_gb":5000,"egress_gb":2000}},"providers":{"AWS":{"name":"Amazon Web Services","region":"ap-south-1 (Mumbai)","sku":{"A_Startup":"m5.large","B_Midsize":"m5.2xlarge","C_DataHeavy":"m5.4xlarge"},"od":{"C_DataHeavy":589.84,"B_Midsize":294.92,"A_Startup":73.73},"ri":{"C_DataHeavy":371.57,"B_Midsize":186.15,"A_Startup":46.72},"storage":{"model":"linear_gb","rate":0.0912,"name":"EBS General Purpose SSD (gp3)"},"egress_tiers":[[0.0,10240.0,0.1093],[10240.0,51200.0,0.085],[51200.0,153600.0,0.082],[153600.0,null,0.08]],"free_egress":100},"Azure":{"name":"Microsoft Azure","region":"centralindia (Pune)","sku":{"A_Startup":"Standard_D2s_v5","B_Midsize":"Standard_D8s_v5","C_DataHeavy":"Standard_D16s_v5"},"od":{"A_Startup":73.73,"B_Midsize":294.92,"C_DataHeavy":589.84},"ri":{"A_Startup":45.5,"B_Midsize":182.0,"C_DataHeavy":363.9166666666667},"storage":{"model":"provisioned_tier","tiers":[{"tier":"P1","gib":4,"price_usd":0.84},{"tier":"P2","gib":8,"price_usd":1.68},{"tier":"P3","gib":16,"price_usd":3.36},{"tier":"P4","gib":32,"price_usd":5.2795},{"tier":"P6","gib":64,"price_usd":10.207},{"tier":"P10","gib":128,"price_usd":19.71},{"tier":"P15","gib":256,"price_usd":38.012142},{"tier":"P20","gib":512,"price_usd":73.22},{"tier":"P30","gib":1024,"price_usd":135.17},{"tier":"P40","gib":2048,"price_usd":259.0457},{"tier":"P50","gib":4096,"price_usd":495.5657},{"tier":"P60","gib":8192,"price_usd":946.08},{"tier":"P70","gib":16384,"price_usd":1802.06},{"tier":"P80","gib":32768,"price_usd":3604.11}],"name":"Premium SSD Managed Disks (LRS)"},"egress_tiers":[[0.0,100.0,0.0],[100.0,10335.0,0.12],[10335.0,51295.0,0.085],[51295.0,153695.0,0.082],[153695.0,512095.0,0.08],[512095.0,null,0.08]],"free_egress":0},"GCP":{"name":"Google Cloud Platform","region":"asia-south1 (Mumbai)","sku":{"A_Startup":"N2-standard-2 equiv","B_Midsize":"N2-standard-8 equiv","C_DataHeavy":"N2-standard-16 equiv"},"od":{"A_Startup":85.15012,"B_Midsize":340.60048,"C_DataHeavy":681.20096},"ri":{"A_Startup":53.63748,"B_Midsize":214.54992,"C_DataHeavy":429.09984},"storage":{"model":"linear_gb","rate":0.12,"name":"Balanced Persistent Disk (pd-balanced)"},"egress_tiers":[[0.0,200.0,0.0],[200.0,10240.0,0.11],[10240.0,153600.0,0.075],[153600.0,null,0.07]],"free_egress":0}},"support_rules":{"basic":{"name":"Basic Support (Free, $0)","formula":"0"},"developer":{"name":"Developer / Standard Support","aws":"max($29, 3%)","azure":"flat $29","gcp":"max($29, 3%)"},"business":{"name":"Business Support+ / Production","aws":"max($100, 10% first $10k)","azure":"flat $100","gcp":"$500 + 3%"}},"exit_policy":{"repatriation_metric":"Standard tiered internet egress on 100% of stored data (routine multi-cloud friction)","waiver_metric":"$0.00 waiver for eligible permanent account termination and migration (2024 policy)","eu_data_act":"Switching charges completely banned from Jan 12, 2027 in EU; Indian accounts rely on voluntary CSP commercial waivers."}};
+    var MANIFEST = FALLBACK_MANIFEST;
+    var USD_INR = MANIFEST.meta.usd_inr;
+    var WORKLOADS = MANIFEST.workloads;
+
+    var DATA = {
+      "AWS": {
+        sku: MANIFEST.providers.AWS.sku,
+        od: MANIFEST.providers.AWS.od,
+        ri: MANIFEST.providers.AWS.ri,
+        storage_rate: MANIFEST.providers.AWS.storage.rate,
+        egress_tiers: MANIFEST.providers.AWS.egress_tiers,
+        free_egress: MANIFEST.providers.AWS.free_egress
+      },
+      "Azure": {
+        sku: MANIFEST.providers.Azure.sku,
+        od: MANIFEST.providers.Azure.od,
+        ri: MANIFEST.providers.Azure.ri,
+        storage_tiers: MANIFEST.providers.Azure.storage.tiers,
+        egress_tiers: MANIFEST.providers.Azure.egress_tiers,
+        free_egress: MANIFEST.providers.Azure.free_egress
+      },
+      "GCP": {
+        sku: MANIFEST.providers.GCP.sku,
+        od: MANIFEST.providers.GCP.od,
+        ri: MANIFEST.providers.GCP.ri,
+        storage_rate: MANIFEST.providers.GCP.storage.rate,
+        egress_tiers: MANIFEST.providers.GCP.egress_tiers,
+        free_egress: MANIFEST.providers.GCP.free_egress
+      }
+    };
+
+    var currentWorkload = "A_Startup";
+    var currentInstanceTier = "A_Startup";
+    var currentStorage = 100;
+    var currentEgress = 100;
+
+    function gbToGiB(gb) {
+      return (gb * 1e9) / Math.pow(2, 30);
+    }
+
+    function calcAzureStorage(gb) {
+      var gib = gbToGiB(gb);
+      var tiers = DATA.Azure.storage_tiers;
+      for (var i = 0; i < tiers.length; i++) {
+        if (gib <= tiers[i].gib) {
+          return { tier: tiers[i].tier, gib: tiers[i].gib, cost: tiers[i].price_usd };
+        }
+      }
+      var last = tiers[tiers.length - 1];
+      return { tier: last.tier, gib: last.gib, cost: last.price_usd };
+    }
+
+    function calcEgress(tiers, gb, freeGb) {
+      var billable = Math.max(0, gb - freeGb);
+      var cost = 0;
+      for (var i = 0; i < tiers.length; i++) {
+        if (billable <= tiers[i][0]) break;
+        cost += (Math.min(billable, tiers[i][1]) - tiers[i][0]) * tiers[i][2];
+      }
+      return cost;
+    }
+
+    function calcSupport(prov, usage, tier) {
+      if (tier === "basic") return 0.0;
+      if (tier === "developer") {
+        if (prov === "AWS") return Math.max(29.0, 0.03 * usage);
+        if (prov === "Azure") return 29.0;
+        if (prov === "GCP") return Math.max(29.0, 0.03 * usage);
+      } else if (tier === "business") {
+        if (prov === "AWS") return Math.max(100.0, 0.10 * Math.min(usage, 10000.0));
+        if (prov === "Azure") return 100.0;
+        if (prov === "GCP") return 500.0 + 0.03 * usage;
+      }
+      return 0.0;
+    }
+
+    function updateSliderLabels() {
+      var stStr = (currentStorage >= 1000) ? (currentStorage / 1000).toFixed(1) + ' TB (' + currentStorage.toLocaleString() + ' GB)' : currentStorage.toLocaleString() + ' GB';
+      var egStr = (currentEgress >= 1000) ? (currentEgress / 1000).toFixed(1) + ' TB (' + currentEgress.toLocaleString() + ' GB)' : currentEgress.toLocaleString() + ' GB';
+      var elSt = document.getElementById('lbl-storage');
+      var elEg = document.getElementById('lbl-egress');
+      if (elSt) elSt.innerText = stStr;
+      if (elEg) elEg.innerText = egStr;
+    }
+
+    function updateWorkloadSpec() {
+      var sp = WORKLOADS[currentInstanceTier];
+      var stStr = (currentStorage >= 1000) ? (currentStorage / 1000).toFixed(1) + ' TB' : currentStorage.toLocaleString() + ' GB';
+      var egStr = (currentEgress >= 1000) ? (currentEgress / 1000).toFixed(1) + ' TB' : currentEgress.toLocaleString() + ' GB';
+      var el = document.getElementById('workload-spec');
+      if (el) {
+        el.innerText = sp.vcpu + ' vCPU · ' + sp.ram_gb + ' GB RAM · ' + stStr + ' Storage · ' + egStr + ' Egress';
+      }
+    }
+
+    function setWorkload(wl) {
+      currentWorkload = wl;
+      document.querySelectorAll('.seg button').forEach(function(b) {
+        if (b.id && (b.id.startsWith('btn-A') || b.id.startsWith('btn-B') || b.id.startsWith('btn-C') || b.id === 'btn-Custom')) {
+          b.classList.remove('on');
+        }
+      });
+      var btn = document.getElementById('btn-' + wl);
+      if (btn) btn.classList.add('on');
+
+      if (wl !== 'Custom') {
+        currentInstanceTier = wl;
+        currentStorage = WORKLOADS[wl].storage_gb;
+        currentEgress = WORKLOADS[wl].egress_gb;
+
+        var sSt = document.getElementById('slider-storage');
+        var sEg = document.getElementById('slider-egress');
+        if (sSt) sSt.value = currentStorage;
+        if (sEg) sEg.value = currentEgress;
+
+        document.querySelectorAll('#seg-instance button').forEach(function(b) { b.classList.remove('on'); });
+        var mapInst = {"A_Startup":"btn-inst-A", "B_Midsize":"btn-inst-B", "C_DataHeavy":"btn-inst-C"};
+        var instBtn = document.getElementById(mapInst[wl]);
+        if (instBtn) instBtn.classList.add('on');
+      }
+
+      updateSliderLabels();
+      updateWorkloadSpec();
+      recalculate();
+    }
+
+    function onSliderChange() {
+      var sSt = document.getElementById('slider-storage');
+      var sEg = document.getElementById('slider-egress');
+      if (sSt) currentStorage = parseInt(sSt.value);
+      if (sEg) currentEgress = parseInt(sEg.value);
+
+      currentWorkload = 'Custom';
+      document.querySelectorAll('.seg button').forEach(function(b) {
+        if (b.id && (b.id.startsWith('btn-A') || b.id.startsWith('btn-B') || b.id.startsWith('btn-C') || b.id === 'btn-Custom')) {
+          b.classList.remove('on');
+        }
+      });
+      var btnC = document.getElementById('btn-Custom');
+      if (btnC) btnC.classList.add('on');
+
+      updateSliderLabels();
+      updateWorkloadSpec();
+      recalculate();
+    }
+
+    function setInstanceTier(tier) {
+      currentInstanceTier = tier;
+      document.querySelectorAll('#seg-instance button').forEach(function(b) { b.classList.remove('on'); });
+      var mapInst = {"A_Startup":"btn-inst-A", "B_Midsize":"btn-inst-B", "C_DataHeavy":"btn-inst-C"};
+      var instBtn = document.getElementById(mapInst[tier]);
+      if (instBtn) instBtn.classList.add('on');
+
+      var isExactPreset = (WORKLOADS[tier].storage_gb === currentStorage && WORKLOADS[tier].egress_gb === currentEgress);
+      if (isExactPreset) {
+        currentWorkload = tier;
+        document.querySelectorAll('.seg button').forEach(function(b) {
+          if (b.id && (b.id.startsWith('btn-A') || b.id.startsWith('btn-B') || b.id.startsWith('btn-C') || b.id === 'btn-Custom')) {
+            b.classList.remove('on');
+          }
+        });
+        var btn = document.getElementById('btn-' + tier);
+        if (btn) btn.classList.add('on');
+      } else {
+        currentWorkload = 'Custom';
+        document.querySelectorAll('.seg button').forEach(function(b) {
+          if (b.id && (b.id.startsWith('btn-A') || b.id.startsWith('btn-B') || b.id.startsWith('btn-C') || b.id === 'btn-Custom')) {
+            b.classList.remove('on');
+          }
+        });
+        var btnC = document.getElementById('btn-Custom');
+        if (btnC) btnC.classList.add('on');
+      }
+
+      updateWorkloadSpec();
+      recalculate();
+    }
+
+    function fmt(val, inr) {
+      if (inr) return '₹' + Math.round(val * USD_INR).toLocaleString('en-IN');
+      return '$' + val.toFixed(2);
+    }
+
+    function recalculate() {
+      var isINR = document.querySelector("input[name='currency']:checked").value === 'INR';
+      var supportTier = document.getElementById('support-tier').value;
+      var provs = ['AWS', 'Azure', 'GCP'];
+      var tOd = {}, tRi = {}, bComp = {}, bExt = {};
+
+      provs.forEach(function(p) {
+        var d = DATA[p], k = p.toLowerCase();
+        var skuEl = document.getElementById(k + '-sku');
+        if (skuEl) skuEl.innerText = d.sku[currentInstanceTier];
+
+        var od = d.od[currentInstanceTier], ri = d.ri[currentInstanceTier];
+        var stor = 0;
+        if (p === 'Azure') {
+          var azDisk = calcAzureStorage(currentStorage);
+          stor = azDisk.cost;
+          var diskLabel = document.getElementById('azure-disk-label');
+          if (diskLabel) diskLabel.innerText = azDisk.tier + ' (' + azDisk.gib + ' GiB)';
+        } else {
+          stor = d.storage_rate * currentStorage;
+        }
+
+        var egr = calcEgress(d.egress_tiers, currentEgress, d.free_egress);
+        var exitC = calcEgress(d.egress_tiers, currentStorage, d.free_egress);
+        
+        var usageOd = od + stor + egr;
+        var usageRi = ri + stor + egr;
+        var sup = calcSupport(p, usageOd, supportTier);
+        
+        var totalOd = usageOd + sup;
+        var totalRi = usageRi + sup;
+        var ext = stor + egr + sup;
+        var hidd = (ext / totalOd) * 100;
+
+        tOd[p] = totalOd; tRi[p] = totalRi; bComp[p] = od; bExt[p] = ext;
+
+        var odEl = document.getElementById(k + '-od'); if (odEl) odEl.innerText = fmt(od, isINR);
+        var riEl = document.getElementById(k + '-ri'); if (riEl) riEl.innerText = fmt(ri, isINR);
+        var storEl = document.getElementById(k + '-storage'); if (storEl) storEl.innerText = fmt(stor, isINR);
+        var egrEl = document.getElementById(k + '-egress'); if (egrEl) egrEl.innerText = fmt(egr, isINR);
+        var supEl = document.getElementById(k + '-support'); if (supEl) supEl.innerText = fmt(sup, isINR);
+        var totOdEl = document.getElementById(k + '-total-od'); if (totOdEl) totOdEl.innerText = fmt(totalOd, isINR);
+        var totRiEl = document.getElementById(k + '-total-ri'); if (totRiEl) totRiEl.innerText = fmt(totalRi, isINR);
+        var hidEl = document.getElementById(k + '-hidden'); if (hidEl) hidEl.innerText = hidd.toFixed(1) + '%';
+        var exitEl = document.getElementById(k + '-exit'); if (exitEl) exitEl.innerText = fmt(exitC, isINR);
+      });
+
+      // Live Winner Logic
+      var minOd = Math.min(tOd.AWS, tOd.Azure, tOd.GCP);
+      var winOdProv = Object.keys(tOd).find(function(k) { return tOd[k] === minOd; });
+
+      var winTitle = document.getElementById('winner-title');
+      var winSub = document.getElementById('winner-sub');
+      if (winTitle && winSub) {
+        if (winOdProv === 'AWS') {
+          var savAzure = tOd.Azure - tOd.AWS;
+          var savGcp = tOd.GCP - tOd.AWS;
+          winTitle.innerText = "AWS is cheapest overall for this configuration (" + fmt(tOd.AWS, isINR) + "/mo)";
+          winSub.innerText = "Saves " + fmt(savAzure, isINR) + " vs. Azure · " + fmt(savGcp, isINR) + " vs. GCP · Lowest storage & 100GB free egress";
+        } else if (winOdProv === 'Azure') {
+          var savAws = tOd.AWS - tOd.Azure;
+          winTitle.innerText = "Azure is cheapest overall for this configuration (" + fmt(tOd.Azure, isINR) + "/mo)";
+          winSub.innerText = "Saves " + fmt(savAws, isINR) + " vs. AWS · Lowest 1-Year reservation compute rate";
+        } else {
+          winTitle.innerText = "Google Cloud is cheapest overall (" + fmt(tOd.GCP, isINR) + "/mo)";
+          winSub.innerText = "Zero cloud exit switching penalty · 200GB free egress";
+        }
+      }
+
+      renderBars(isINR, tOd, tRi, bComp, bExt);
+    }
+
+    function renderBars(isINR, tOd, tRi, bComp, bExt) {
+      var currentMax = Math.max(tOd.AWS, tOd.Azure, tOd.GCP);
+      var ceiling = Math.max(160, currentMax * 1.18);
+
+      var h1 = '<div class="vchart-area">' +
+        '<div class="vchart-grid-line l75"></div>' +
+        '<div class="vchart-grid-line l50"></div>' +
+        '<div class="vchart-grid-line l25"></div>' +
+        '<span class="vchart-grid-label" style="top: 25%;">' + fmt(ceiling * 0.75, isINR) + '</span>' +
+        '<span class="vchart-grid-label" style="top: 50%;">' + fmt(ceiling * 0.50, isINR) + '</span>' +
+        '<span class="vchart-grid-label" style="top: 75%;">' + fmt(ceiling * 0.25, isINR) + '</span>';
+
+      var h2 = '<div class="vchart-area" style="height: 155px;">' +
+        '<div class="vchart-grid-line l75"></div>' +
+        '<div class="vchart-grid-line l50"></div>' +
+        '<div class="vchart-grid-line l25"></div>' +
+        '<span class="vchart-grid-label" style="top: 25%;">75%</span>' +
+        '<span class="vchart-grid-label" style="top: 50%;">50%</span>' +
+        '<span class="vchart-grid-label" style="top: 75%;">25%</span>';
+
+      ['AWS', 'Azure', 'GCP'].forEach(function(p) {
+        var hOdPx = Math.max(8, (tOd[p] / ceiling) * 125);
+        var hRiPx = Math.max(8, (tRi[p] / ceiling) * 125);
+
+        h1 += '<div class="vbar-group">' +
+          '<div class="vbar-cols">' +
+            '<div class="vbar-col-box">' +
+              '<div class="vbar-val-float" title="' + p + ' On-Demand: ' + fmt(tOd[p], isINR) + '">' + fmt(tOd[p], isINR) + '</div>' +
+              '<div class="vbar-pill fill-blue" style="height:' + hOdPx.toFixed(1) + 'px;" title="' + p + ' On-Demand: ' + fmt(tOd[p], isINR) + '"></div>' +
+            '</div>' +
+            '<div class="vbar-col-box">' +
+              '<div class="vbar-val-float green" title="' + p + ' 1-Yr Commitment: ' + fmt(tRi[p], isINR) + '">' + fmt(tRi[p], isINR) + '</div>' +
+              '<div class="vbar-pill fill-green" style="height:' + hRiPx.toFixed(1) + 'px;" title="' + p + ' 1-Yr Commitment: ' + fmt(tRi[p], isINR) + '"></div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="vbar-label">' + p + '</div>' +
+        '</div>';
+
+        var t = tOd[p], pc = (bComp[p] / t) * 100, pe = (bExt[p] / t) * 100;
+        h2 += '<div class="vbar-group">' +
+          '<div class="vbar-cols">' +
+            '<div class="vbar-col-box" style="max-width: 56px;">' +
+              '<div class="vbar-val-float orange" title="Hidden Extras: ' + pe.toFixed(1) + '%">' + pe.toFixed(0) + '% ext</div>' +
+              '<div class="vbar-stacked-col" title="' + p + ': Compute ' + pc.toFixed(1) + '% | Hidden Extras ' + pe.toFixed(1) + '%">' +
+                '<div class="vbar-stack-seg fill-indigo" style="height:' + pc.toFixed(1) + '%;"></div>' +
+                '<div class="vbar-stack-seg fill-orange" style="height:' + pe.toFixed(1) + '%;"></div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="vbar-label">' + p + ' <span style="font-size:11px; font-weight:500; color:#86868b;">(' + pc.toFixed(0) + '% core)</span></div>' +
+        '</div>';
+      });
+
+      h1 += '</div>';
+      h2 += '</div>';
+
+      var cb = document.getElementById('cost-bars');
+      var bb = document.getElementById('breakdown-bars');
+      if (cb) cb.innerHTML = h1;
+      if (bb) bb.innerHTML = h2;
+    }
+
+    // Dynamic Manifest Loader
+    async function loadPricingManifest() {
+      try {
+        var res = await fetch('pricing_manifest.json');
+        if (res.ok) {
+          var m = await res.json();
+          MANIFEST = m;
+          USD_INR = m.meta.usd_inr;
+          WORKLOADS = m.workloads;
+          DATA.AWS.sku = m.providers.AWS.sku;
+          DATA.AWS.od = m.providers.AWS.od;
+          DATA.AWS.ri = m.providers.AWS.ri;
+          DATA.AWS.storage_rate = m.providers.AWS.storage.rate;
+          DATA.AWS.egress_tiers = m.providers.AWS.egress_tiers;
+          DATA.AWS.free_egress = m.providers.AWS.free_egress;
+          DATA.Azure.sku = m.providers.Azure.sku;
+          DATA.Azure.od = m.providers.Azure.od;
+          DATA.Azure.ri = m.providers.Azure.ri;
+          DATA.Azure.storage_tiers = m.providers.Azure.storage.tiers;
+          DATA.Azure.egress_tiers = m.providers.Azure.egress_tiers;
+          DATA.Azure.free_egress = m.providers.Azure.free_egress;
+          DATA.GCP.sku = m.providers.GCP.sku;
+          DATA.GCP.od = m.providers.GCP.od;
+          DATA.GCP.ri = m.providers.GCP.ri;
+          DATA.GCP.storage_rate = m.providers.GCP.storage.rate;
+          DATA.GCP.egress_tiers = m.providers.GCP.egress_tiers;
+          DATA.GCP.free_egress = m.providers.GCP.free_egress;
+          console.log("pricing_manifest.json loaded dynamically from server.");
+        }
+      } catch (err) {
+        console.warn("Could not fetch pricing_manifest.json over network (using embedded fallback):", err);
+      }
+      updateSliderLabels();
+      updateWorkloadSpec();
+      recalculate();
+    }
+
+    window.onload = function() {
+      loadPricingManifest();
+    };
+  </script>
+</body>
+</html>

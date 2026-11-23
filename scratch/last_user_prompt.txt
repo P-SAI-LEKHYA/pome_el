@@ -1,0 +1,190 @@
+<USER_REQUEST>
+I am preparing the **Results, Discussion and Conclusion sections** of my IEEE-style conference paper titled:
+
+**"Analysing Pricing and Competition in Cloud Computing Services: A Competitive Strategy Approach with an Indian Market Lens."**
+
+I want you to generate publication-quality academic content for these sections based on the actual implemented project, calculation engine, pricing data, experimental results and analytical models.
+
+I have uploaded my current conference paper template. Carefully inspect it first, particularly:
+- The Abstract and Introduction
+- Research objectives and contributions
+- Methodology and experimental setup
+- Workload definitions
+- Pricing calculation equations
+- Vendor lock-in assessment
+- Porter's Five Forces framework
+
+The new content must be consistent with the existing paper's terminology, methodology, assumptions and IEEE academic writing style.
+
+### 1. First, inspect the complete project
+
+Before drafting, inspect the actual project files, including:
+
+- Python calculation engine
+- Provider-specific pricing extraction scripts
+- Pricing JSON files
+- Unified pricing manifest
+- Generated CSV results
+- Vendor lock-in scoring implementation
+- Sensitivity analysis implementation
+- Interactive dashboard
+- Test scripts and test outputs
+- Pricing sources and verification dates
+
+Do not rely exclusively on previous audit reports or summaries. Verify important findings against the actual implementation and generated results.
+
+Use the three existing workload profiles:
+
+| Workload | vCPU | RAM | Storage | Monthly Egress |
+|---|---:|---:|---:|---:|
+| Startup | 2 | 8 GB | 100 GB | 100 GB |
+| Midsize | 8 | 32 GB | 1,000 GB | 500 GB |
+| Data-Heavy | 16 | 64 GB | 5,000 GB | 2,000 GB |
+
+The providers are:
+- AWS – Mumbai (ap-south-1)
+- Microsoft Azure – Central India
+- Google Cloud – Mumbai (asia-south1)
+
+### 2. Generate Section V – RESULTS
+
+Write a detailed but concise academic Results section.
+
+Organise it into suitable subsections:
+
+**A. Comparative Monthly Cost Analysis**
+- Present the actual monthly cost for all three providers and all three workloads.
+- Compare on-demand and one-year commitment costs.
+- Explain how compute, storage, egress and support contribute to the final bill.
+- Identify the lowest-cost provider for each workload, if supported by the verified results.
+- Explain how the cost differences change as workload size increases.
+- Avoid claiming that one provider is universally cheapest.
+
+**B. Cost Composition and Hidden Costs**
+- Compare compute costs against non-compute costs.
+- Report the hidden-cost percentage for each provider and workload.
+- Explain the contribution of storage, outbound data transfer and support.
+- Identify cases where a low compute price does not translate into the lowest total monthly cost.
+
+**C. Storage and Data Transfer Analysis**
+- Discuss the differences in storage pricing structures.
+- Account for Azure Premium SSD v1 discrete provisioned disk tiers, rather than assuming linear per-GB pricing.
+- Discuss the impact of free egress allowances and tiered outbound data transfer.
+- Explain how egress becomes more significant as data transfer increases.
+
+**D. Vendor Lock-in Results**
+- Present the five lock-in criteria and their weights.
+- Show the final weighted score for AWS, Azure and GCP.
+- Explain which criteria contribute most to the differences.
+- Discuss the results of the 5,000 random-weight sensitivity analysis.
+- Clearly distinguish sensitivity to weights from validation of the underlying manually assigned scores.
+- Do not make unsupported claims about actual migration difficulty.
+
+**E. Exit Cost Analysis**
+- Present standard egress-based data repatriation costs separately from conditional cloud-exit waiver scenarios.
+- Explain the limitations of using data transfer charges as a proxy for the total cost of migration.
+- Avoid presenting conditional waivers as universally available or guaranteed.
+
+**F. Sensitivity Analysis**
+- Present the actual sensitivity results.
+- Include the scenario where Azure compute prices are reduced by 10%.
+- Recalculate the complete workload total before discussing whether provider rankings change.
+- Discuss the effect of changing storage, egress, support and commitment assumptions where the project contains corresponding experiments.
+- Do not reuse conclusions from earlier versions of the project.
+
+### 3. Generate Section VI – DISCUSSION
+
+Interpret the results rather than simply repeating the tables.
+
+Discuss:
+
+1. Why provider rankings vary across workload sizes.
+2. Why compute-only comparisons can be misleading.
+3. How storage pricing structures and network transfer costs influence total expenditure.
+4. How commitment-based pricing changes the economic comparison.
+5. Whether the lowest-cost provider also has the lowest lock-in score.
+6. How the cost results and lock-in scores together influence provider selection.
+7. What the results suggest about competition between hyperscale cloud providers in the Indian market.
+8. How Porter's Five Forces explains the observed competitive environment.
+
+Connect the discussion to the research gap and contributions identified in the Introduction.
+
+Make the discussion analytical and evidence-based. Do not repeat the methodology.
+
+### 4. Generate Section VII – CONCLUSION AND FUTURE WORK
+
+Write a strong academic conclusion that:
+
+- Restates the research problem and objective.
+- Summarises the main findings from the cost comparison.
+- Highlights the importance of non-compute expenditure.
+- Summarises the vendor lock-in findings.
+- Explains the value of combining cost analysis, strategic analysis and lock-in assessment.
+- Explains the practical value of the interactive pricing calculator.
+- States the implications for Indian startups, growing businesses and data-intensive organisations.
+- Acknowledges the study's limitations.
+- Suggests realistic future research directions.
+
+Potential future work may include:
+- More Indian cloud regions and additional providers.
+- Real-world workload benchmarking.
+- CPU performance-normalised cost comparisons.
+- More detailed migration-cost estimation.
+- Empirical validation of vendor lock-in scores.
+- Broader service categories such as databases, Kubernetes, serverless and managed AI services.
+- Time-series pricing analysis.
+
+Only include future work that is relevant to the actual study.
+
+### 5. Academic writing requirements
+
+Follow these requirements strictly:
+
+- Use formal IEEE-style academic language.
+- Write in third person.
+- Avoid conversational wording.
+- Avoid marketing language and exaggerated claims.
+- Make the writing suitable for a peer-reviewed conference paper.
+- Use clear subsection headings.
+- Keep paragraphs concise and logically connected.
+- Use consistent technical terminology and notation.
+- Refer to tables and figures in the IEEE style (e.g., "Table II shows..." and "Fig. 4 illustrates...").
+- Recommend appropriate tables and figures to accompany the Results section.
+- Provide suitable captions for every recommended table and figure.
+- Do not create unnecessary subsections merely to increase length.
+
+### 6. Numerical and factual integrity
+
+This is extremely important.
+
+- Use only values obtained from the current project implementation and verified pricing data.
+- Independently recalculate important totals before using them.
+- Ensure USD and INR values are consistent.
+- Ensure on-demand and one-year figures are not mixed.
+- Ensure hidden-cost percentages use the correct denominator.
+- Ensure support charges follow the selected support plan's actual pricing formula.
+- Ensure Azure disk tiers and egress tiers are correctly applied.
+- Distinguish standard repatriation costs from conditional exit-waiver scenarios.
+- Do not use old results from earlier project versions.
+- Do not invent results, statistics, percentages, citations or test outcomes.
+- If a value cannot be verified, explicitly flag it rather than silently assuming it is correct.
+
+### 7. Output format
+
+Provide the following:
+
+1. Complete Section V – RESULTS.
+2. Complete Section VI – DISCUSSION.
+3. Complete Section VII – CONCLUSION AND FUTURE WORK.
+4. All numerical tables needed for these sections.
+5. Recommended figures and their IEEE-style captions.
+6. A short list of numerical values and assumptions that still require verification.
+7. A consistency check confirming that the generated sections do not contradict the Introduction or Methodology.
+
+Do not modify the existing project files or redesign the dashboard.
+
+The objective is to produce academically defensible, technically accurate and publication-ready Results, Discussion and Conclusion sections that fit directly into my existing IEEE conference paper.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-11-22T22:16:25+05:30.
+</ADDITIONAL_METADATA>
